@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Kotlin on Notepadium</title>
+    <title>Kotlin on Sketchbook</title>
     <link>/categories/kotlin/</link>
-    <description>Recent content in Kotlin on Notepadium</description>
+    <description>Recent content in Kotlin on Sketchbook</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©2020 Notepadium.</copyright>
