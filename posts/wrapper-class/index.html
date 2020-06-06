@@ -26,10 +26,9 @@ Integer nullValue = null;
 <p align="center">
 	<img src="/images/primitive-wrapper.png">
 </p>
-<p>primitve 와 Wrapper Type을 분리한 이유를 이야기하기 전에, Boxing / UnBoxing 에 대해 짚고 넘어가봅시다.</p>
-<h4 id="boxing-과-unboxing">Boxing 과 UnBoxing</h4>
-<p>Boxing은 간단하게 말해서 primitive 값을 Wrapper 값으로 변환하는 과정입니다.<br>
-UnBoxing 은 Boxing과 반대로 Wrapper 값을 primitive 값으로 변환하는 과정이구요.</p>
+<p><code>문득..</code> primitve 와 Wrapper Type을 분리한 이유가 궁금해지지않나요?</p>
+<h4 id="알쓸신잡-boxing-과-unboxing">[알쓸신잡] Boxing 과 UnBoxing</h4>
+<p>Boxing은 간단하게 말해서 primitive 값을 Wrapper 값으로 변환하는 과정입니다. UnBoxing 은 Boxing과 반대로 Wrapper 값을 primitive 값으로 변환하는 과정이구요.</p>
 <pre><code>	Integer integer = new Integer(5); // Boxing
 	int a = integer.intValue(); //unBoxing
 </code></pre><blockquote>
@@ -76,7 +75,7 @@ UnBoxing 은 Boxing과 반대로 Wrapper 값을 primitive 값으로 변환하는
 </blockquote>
 <p>jdk 1.5 에서부턴 AutoBoxing이 지원되어, 큰 불편함이 없지만<br>
 알아두면 좋을 것같아서 정리해봤습니다. !</p>
-<h4 id="java-generic-에서의-차이">Java Generic 에서의 차이</h4>
+<h4 id="알쓸신잡-java-generic-에서의-차이">[알쓸신잡] Java Generic 에서의 차이</h4>
 <p>// todo</p>
 <p>참조<br>
 [1] <a href="https://docs.oracle.com/javase/8/docs/api/"target="_blank">Java doc</a>  <br>
