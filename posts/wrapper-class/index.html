@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Boxing 과 UnBoxing&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.5feabbfa0c2473bc2b7916341f1e47cf5447d67069d2994723c5b83574d69129fbd136f8e59cbecfaf224e157ea5c613.css" integrity="sha384-X&#43;q7&#43;gwkc7wreRY0Hx5Hz1RH1nBp0plHI8W4NXTWkSn70Tb45Zy&#43;z68iThV&#43;pcYT"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sketchbook</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a><a class="nav item" href="/">Sketchbook</a></nav></div></span></div><div class="site slogan"><span class="title">빈 스케치북에 뭐라도 적어놔야지</span></div></section><div id="content"><section class="article header">
+    <h1 class="article title">Boxing 과 UnBoxing</h1><p class="article date">Dec 09, 2016</p></section><article class="article markdown-body"><p>Java에는 Primitive 라고 불리는 <code>원시 티입</code>과 Wrapper 라고 불리는 <code>Object Type</code>이 존재합니다.<br>
+이번 포스트에서는 Wrapper, Primitive와 관련된 boxing과 unboxing, 나아가 Autoboxing에 대해 이야기할 예정입니다.</p>
+<h4 id="primitive-type">Primitive type</h4>
+<p>코드에서 흔히 볼 수 있는 <code>int , double, boolean, char</code> 등을 Primitive type, 다른 말로는 원시타입이라고 부릅니다.</p>
+<p>Java에서의 Primitive type은 비객체 타입이며, Null 값을 가질 수 없습니다.</p>
+<blockquote>
+<p>NULL 은 &ldquo;초기화되지 않은 상태&quot;와는 다른 의미로, &ldquo;객체가 아무것도 가르키고 있지 않다.&rdquo; 라는 의미로 사용됩니다.</p>
+</blockquote>
+<pre><code>// 초기화하지 않은 상태로는 사용할 수 없으며, 사용시 compile error 를 뱉게 됩니다.
+int notDeclaredValue; 
+// null 은 초기화된 상태로, 사용가능합니다.
+Integer nullValue = null;
+</code></pre><h4 id="wrapper-type">Wrapper Type</h4>
+<p>Wrapper type, 즉 참조형은 java.lang.Object을 상속받은 자료형으로 String, Integer, Double 등이 여기에 해당됩니다.</p>
+<blockquote>
+<p>앞서 설명했듯, Wrapper Type 은 null로 초기화 될 수 있습니다.</p>
+</blockquote>
+<p>아래처럼 Primitive Type에는 각각 대응되는 Wrapper Type 이 존재하는데요.</p>
+<p align="center">
+	<img src="/images/primitive-wrapper.png">
+</p>
+<p>primitve 와 Wrapper Type을 분리한 이유를 이야기하기 전에, Boxing / UnBoxing 에 대해 짚고 넘어가봅시다.</p>
+<h4 id="boxing-과-unboxing">Boxing 과 UnBoxing</h4>
+<p>Boxing은 간단하게 말해서 primitive 값을 Wrapper 값으로 변환하는 과정입니다.<br>
+UnBoxing 은 Boxing과 반대로 Wrapper 값을 primitive 값으로 변환하는 과정이구요.</p>
+<pre><code>	Integer integer = new Integer(5); // Boxing
+	int a = integer.intValue(); //unBoxing
+</code></pre><blockquote>
+<p>jdk 1.5 이상부터는 위 예시처럼 Boxing / UnBoxing을 위한 메서드를 호출할 필요가 없습니다.</p>
+</blockquote>
+<pre><code>	Integer integer = 5; // AutoBoxing
+	int a = integer //AutounBoxing
+</code></pre><h4 id="primitive와-wrapper-class">Primitive와 Wrapper class</h4>
+<p>여기서 아까의 의문을 가져오겠습니다.</p>
+<blockquote>
+<p>primitvie와 Wrapper type의 차이점은 무엇이고, 왜 구분해 두었는가?</p>
+</blockquote>
+<p>사실 답은 위에서 이미 언급된 내용입니다. 바로 primitive가 Object type이 아니라는 점이죠.</p>
+<p>Java의 API를 보다보면 다음과 같은 Method를 많이 볼 수 있습니다.</p>
+<pre><code>	boolean contains(Object o);
+</code></pre><p>대부분의 Collection에서 지원하는 Method 중 하나인데, 눈에 띄는것은 인자의 형태가 Object라는 점입니다. Java 언어에서 Object는 참조형의 최상위 클래스입니다.</p>
+<p>즉, 저 함수의 인자로 모든 primitive type이 들어갈 수 있다는 의미입니다.</p>
+<blockquote>
+<p>객체의 다형성과 연결되는 이야기입니다.</p>
+</blockquote>
+<p>만약 API를 디자인할때, Primitive type이 쓰일 경우 int, double, boolean 등 인자 마다 Method를 정의해야합니다.</p>
+<pre><code>	boolean contains(int a);
+	boolean contains(double b);
+</code></pre><p>반면에, Wrapper class를 만들어 두고 인자형을 Object로 사용한다면
+다음과 같이 하나의 메소드만으로 모든 Wrapper type을 받아 처리할 수 있습니다.</p>
+<p>이러한 이유때문에 Java 언어에서는 Wrapper class를 지원하고 있습니다.</p>
+<blockquote>
+<p>Q. 그럼 Wrapper만 쓰면되지않나 ?</p>
+</blockquote>
+<p>Wrapper Type 만으로 개발을 하게되면, 크게 2가지 정도의 문제점에 봉착하게 됩니다.</p>
+<pre><code>1. equals 연산을 사용해야한다.
+2. Null check 를 해야한다.
+</code></pre><blockquote>
+<p>todo string == 연산과 Null check 코드</p>
+</blockquote>
+<h4 id="알쓸신잡-integer-caching">[알쓸신잡] Integer Caching</h4>
+<p>Integer는 Wrapper Type이지만, == 을 사용할 수 있는 범위가 존재합니다. <code>-128 ~ 127</code> 까지의 범위에서는 사용이 가능한데, 그 이유는 Integer 내부에서 IntegerCache 를 통해 일정 범위를 저장해두기 때문입니다.</p>
+<pre><code>	private static class IntegerCache {  
+	 	//Integer을 까보시면 정의되어있습니다.
+	} 
+</code></pre><blockquote>
+<p>Integer class는 -128~ 127의 범위를 cache로 저장해둔다. <br>
+때문에 해당 범위 내에선 == 를 사용 가능하다.</p>
+</blockquote>
+<p>jdk 1.5 에서부턴 AutoBoxing이 지원되어, 큰 불편함이 없지만<br>
+알아두면 좋을 것같아서 정리해봤습니다. !</p>
+<h4 id="java-generic-에서의-차이">Java Generic 에서의 차이</h4>
+<p>// todo</p>
+<p>참조<br>
+[1] <a href="https://docs.oracle.com/javase/8/docs/api/"target="_blank">Java doc</a>  <br>
+[2] <a href="http://hyeonstorage.tistory.com/168"target="_blank">[JAVA] Wrapper class 란? 그리고 AutoBoxing</a>  <br>
+[3] <a href="http://stackoverflow.com/questions/20697868/why-we-need-wrapper-class"target="_blank">Why we need wrapper class [duplicate]</a> <br>
+[4] <a href="https://slipp.net/questions/66"target="_blank">자바에서 primitive type과 래퍼 클래스 중 무엇을 사용하나요?</a></p>
+</article><section class="article labels"><a class="category" href=/categories/java/>Java</a><a class="tag" href=/tags/java/>Java</a></section><section class="article navigation"><p><a class="link" href="/posts/hello/"><span class="li">&larr;</span>title</a></p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Notepadium.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>
