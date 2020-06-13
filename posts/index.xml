@@ -22,6 +22,15 @@
     </item>
     
     <item>
+      <title>ssh 동작 방식</title>
+      <link>/posts/ssh/</link>
+      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/ssh/</guid>
+      <description>SSH Protocol ssh 이란 Secure Shell Protocol 의 약자로, FTP / Telnet 에 비해 보안에 초점을 맞춘 protocol 입니다. 인증 방식 ssh 은 비대칭키 방식을 이용하여 사용자 인증을 진행합니다. client / server 간의 통신 시 보</description>
+    </item>
+    
+    <item>
       <title>Boxing 과 UnBoxing</title>
       <link>/posts/wrapper-class/</link>
       <pubDate>Fri, 09 Dec 2016 00:00:00 +0000</pubDate>
