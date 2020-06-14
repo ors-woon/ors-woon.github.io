@@ -8,7 +8,7 @@
     <h1 class="article title">ssh 동작 방식</h1><p class="article date">Mar 14, 2020</p></section><article class="article markdown-body"><h1 id="ssh-protocol">SSH Protocol</h1>
 <p>ssh 이란  <code>Secure Shell Protocol</code> 의 약자로,  FTP / Telnet 에 비해 <strong>보안</strong>에 초점을 맞춘  protocol 입니다.</p>
 <h2 id="인증-방식">인증 방식</h2>
-<p>ssh 은 <code>비대칭키</code> 방식을 이용하여 사용자 인증을 진행합니다.  client / server 간의 통신 시 보안을 위해 packet을 암호화하는데, 이때 암호화/복호화의 수단으로 key(<code>일종의 비밀번호</code>) 를 이용합니다.</p>
+<p>ssh 은 <code>비대칭키</code> 방식을 이용하여 사용자 인증을 진행합니다.  client / server 간의 통신 시 보안을 위해 packet을 암호화하는데, 이때 암호화/복호화의 수단으로 key 를 이용합니다.</p>
 <p>하나의 key로 암호화 / 복호화를 진행하는 방식을 <code>대칭키</code>,  하나의 key로 암호화한 내용을, 다른 key로 복호화 할 수 있는 방식을 <code>비대칭키</code>라 말합니다.</p>
 <p>대칭키는 키 유출 시, client / server 간의 내용이 쉽게 노출될 수 있어 바로 사용되진 않으며,  비대칭키는 컴퓨터 자원을 많이 소모합니다. 때문에 ssh / https 는  비대칭키 / 대칭키를  모두 사용하는 방식을 이용합니다.</p>
 <h2 id="비대칭키">비대칭키</h2>
