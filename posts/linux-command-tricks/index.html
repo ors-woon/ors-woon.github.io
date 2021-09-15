@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>Linux Command Tips And Tricks&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.0c1ef03bca587fb8fb2c1073f3c6462e16d7ee1d0152e887ab07bda1c16f6a4214f31b0443773aaf34e5228c2ccc8c8c.css" integrity="sha384-DB7wO8pYf7j7LBBz88ZGLhbX7h0BUuiHqwe9ocFvakIU8xsEQ3c6rzTlIowszIyM"><body>
+    <div class="base-body"><section id="header" class="site header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sketchbook</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a><a class="nav item" href="/">Sketchbook</a></nav></div></span></div><div class="site slogan"><span class="title">빈 스케치북에 뭐라도 적어놔야지</span></div></section><div id="content"><section class="article header">
+    <h1 class="article title">Linux Command Tips And Tricks</h1><p class="article date">Jun 14, 2020</p></section><article class="article markdown-body"><p>본 포스트는 <a href="https://itsfoss.com/linux-command-tricks/"target="_blank">20 Linux Command Tips and Tricks That Will Save You A Lot of Time</a>에 나오는 일부 팁들을 정리한 글입니다.</p>
+<blockquote>
+<p>자세한 내용은 위 포스트를 참고해주세요 (_ )</p>
+</blockquote>
+<h4 id="linux-tips-and-tricks">Linux Tips and Tricks</h4>
+<p>개인적으로, 새로운 IDE를 쓰거나, Tool 혹은 언어를 배울때면, 단축키나 Trick을 찾아 공부하고 있습니다.</p>
+<blockquote>
+<p>어느정도 생산성을 올려줘서 찾는 것도 있지만, 사실 멋잇어보여서 ..</p>
+</blockquote>
+<p>필요할때마다 찾아보고있는데, 한번 정리해두면 보기 편할거 같아, 글로 정리해봅니다 :)</p>
+<h4 id="running-multiple-commands-in-one-single-command">Running multiple commands in one single command</h4>
+<p>여러개의 명령어를 한줄로 치기위한 방법입니다.</p>
+<p>예를들어, 여러 component를 command line 으로 빌드하려할떄, 아래처럼 명령어를 입력 할 수 있습니다.</p>
+<pre tabindex="0"><code>build a; build b; build c
+</code></pre><blockquote>
+<p>다만 위 명령어는 앞의 명령어의 성공 여부와는 상관 없이 다음 명령어를 실행 시킵니다.</p>
+</blockquote>
+<p>만약 의존성을 갖는 component 의  build 라면 아래 처럼 AND 연산자를 사용해야합니다.</p>
+<pre tabindex="0"><code>build a &amp;&amp; build b &amp;&amp; build c
+</code></pre><h4 id="easily-search-and-use-the-commands-that-you-had-used-in-the-past">Easily search and use the commands that you had used in the past</h4>
+<p>(개인적으로 자주있는 상황인데..) grep / cut 을 이용해 검색을 한 후에, directory를 넘다드는 과정에서 이전에 친 명령어가 다시 필요한 적이 있습니다.</p>
+<p>보통 history 명령어로 다시 찾곤하는데, 그럴 필요 없이 아래 tricks 로 쉽게 찾을 수 있습니다.</p>
+<pre tabindex="0"><code>ctrl + r serach_term
+</code></pre><h4 id="reuse-the-last-item-from-the-previous-command-with-">Reuse the last item from the previous command with !$</h4>
+<p>이전 명령어에 대한 argument 를 사용하고 싶을떄는 아래처럼 !$ 을 쓸 수 있습니다.</p>
+<blockquote>
+<p>당장 떠오르는 상황은 아래같은 상황이네요</p>
+</blockquote>
+<pre tabindex="0"><code>cd SQLGateDriver_1.1.log
+cd: not a directory: SQLGateDriver_1.1.log
+vi !$
+vi SQLGateDriver_1.1.log
+</code></pre><h4 id="reuse-the-previous-command-in-present-command-with-">Reuse the previous command in present command with !!</h4>
+<p>이전 명령어를 !! 로 불러올 수 있습니다.</p>
+<pre tabindex="0"><code>vi kmplex-hugo-bloc
+vi /etc/hosts
+sudo !!
+</code></pre><p>일단은 이정도 ?</p>
+<p>ctrl + r / !! / !$  정도는 자주 쓸거 같음</p>
+</article><section class="article labels"><a class="category" href=/categories/linux/>Linux</a><a class="tag" href=/tags/linux/>Linux</a><a class="tag" href=/tags/trick/>Trick</a></section><section class="article navigation"><p><a class="link" href="/posts/comparator/"><span class="li">&rarr;</span>-able / -tor Interface</a class="link">
+    </p></section></div><section id="footer" class="footer"><div class="footer-wrap">
+    <p class="copyright">©2020 Notepadium.</p>
+    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
+        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank">Notepadium</a></p>
+</div></section></div>
+</body>
+
+</html>

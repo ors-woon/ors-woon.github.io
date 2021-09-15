@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>Boxing 과 UnBoxing&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.5feabbfa0c2473bc2b7916341f1e47cf5447d67069d2994723c5b83574d69129fbd136f8e59cbecfaf224e157ea5c613.css" integrity="sha384-X&#43;q7&#43;gwkc7wreRY0Hx5Hz1RH1nBp0plHI8W4NXTWkSn70Tb45Zy&#43;z68iThV&#43;pcYT"><body>
+<meta name="supported-color-schemes" content="light dark"><title>Boxing 과 UnBoxing&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.0c1ef03bca587fb8fb2c1073f3c6462e16d7ee1d0152e887ab07bda1c16f6a4214f31b0443773aaf34e5228c2ccc8c8c.css" integrity="sha384-DB7wO8pYf7j7LBBz88ZGLhbX7h0BUuiHqwe9ocFvakIU8xsEQ3c6rzTlIowszIyM"><body>
     <div class="base-body"><section id="header" class="site header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sketchbook</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a><a class="nav item" href="/">Sketchbook</a></nav></div></span></div><div class="site slogan"><span class="title">빈 스케치북에 뭐라도 적어놔야지</span></div></section><div id="content"><section class="article header">
@@ -13,7 +13,7 @@
 <blockquote>
 <p>NULL 은 &ldquo;초기화되지 않은 상태&quot;와는 다른 의미로, &ldquo;객체가 아무것도 가르키고 있지 않다.&rdquo; 라는 의미로 사용됩니다.</p>
 </blockquote>
-<pre><code>// 초기화하지 않은 상태로는 사용할 수 없으며, 사용시 compile error 를 뱉게 됩니다.
+<pre tabindex="0"><code>// 초기화하지 않은 상태로는 사용할 수 없으며, 사용시 compile error 를 뱉게 됩니다.
 int notDeclaredValue; 
 // null 은 초기화된 상태로, 사용가능합니다.
 Integer nullValue = null;
@@ -29,12 +29,12 @@ Integer nullValue = null;
 <p><code>문득..</code> primitve 와 Wrapper Type을 분리한 이유가 궁금해지지않나요?</p>
 <h4 id="알쓸신잡-boxing-과-unboxing">[알쓸신잡] Boxing 과 UnBoxing</h4>
 <p>Boxing은 간단하게 말해서 primitive 값을 Wrapper 값으로 변환하는 과정입니다. UnBoxing 은 Boxing과 반대로 Wrapper 값을 primitive 값으로 변환하는 과정이구요.</p>
-<pre><code>	Integer integer = new Integer(5); // Boxing
+<pre tabindex="0"><code>	Integer integer = new Integer(5); // Boxing
 	int a = integer.intValue(); //unBoxing
 </code></pre><blockquote>
 <p>jdk 1.5 이상부터는 위 예시처럼 Boxing / UnBoxing을 위한 메서드를 호출할 필요가 없습니다.</p>
 </blockquote>
-<pre><code>	Integer integer = 5; // AutoBoxing
+<pre tabindex="0"><code>	Integer integer = 5; // AutoBoxing
 	int a = integer //AutounBoxing
 </code></pre><h4 id="primitive와-wrapper-class">Primitive와 Wrapper class</h4>
 <p>여기서 아까의 의문을 가져오겠습니다.</p>
@@ -43,14 +43,14 @@ Integer nullValue = null;
 </blockquote>
 <p>사실 답은 위에서 이미 언급된 내용입니다. 바로 primitive가 Object type이 아니라는 점이죠.</p>
 <p>Java의 API를 보다보면 다음과 같은 Method를 많이 볼 수 있습니다.</p>
-<pre><code>	boolean contains(Object o);
+<pre tabindex="0"><code>	boolean contains(Object o);
 </code></pre><p>대부분의 Collection에서 지원하는 Method 중 하나인데, 눈에 띄는것은 인자의 형태가 Object라는 점입니다. Java 언어에서 Object는 참조형의 최상위 클래스입니다.</p>
 <p>즉, 저 함수의 인자로 모든 primitive type이 들어갈 수 있다는 의미입니다.</p>
 <blockquote>
 <p>객체의 다형성과 연결되는 이야기입니다.</p>
 </blockquote>
 <p>만약 API를 디자인할때, Primitive type이 쓰일 경우 int, double, boolean 등 인자 마다 Method를 정의해야합니다.</p>
-<pre><code>	boolean contains(int a);
+<pre tabindex="0"><code>	boolean contains(int a);
 	boolean contains(double b);
 </code></pre><p>반면에, Wrapper class를 만들어 두고 인자형을 Object로 사용한다면
 다음과 같이 하나의 메소드만으로 모든 Wrapper type을 받아 처리할 수 있습니다.</p>
@@ -59,7 +59,7 @@ Integer nullValue = null;
 <p>Q. 그럼 Wrapper만 쓰면되지않나 ?</p>
 </blockquote>
 <p>Wrapper Type 만으로 개발을 하게되면, 크게 2가지 정도의 문제점에 봉착하게 됩니다.</p>
-<pre><code>1. equals 연산을 사용해야한다.
+<pre tabindex="0"><code>1. equals 연산을 사용해야한다.
 2. Null check 를 해야한다.
 </code></pre><h4 id="1-equals-연산을-사용해야한다">1. equals 연산을 사용해야한다.</h4>
 <p>Wrapper Type 은 <code>Object</code>입니다. 때문에 동일성<code>==</code>비교로는 객체가 동등<code>equals</code>한지 알 수 없습니다.</p>
@@ -70,7 +70,7 @@ Integer nullValue = null;
 <blockquote>
 <p>output</p>
 </blockquote>
-<pre><code>false
+<pre tabindex="0"><code>false
 true
 424058530
 321001045
@@ -78,7 +78,7 @@ true
 만약 실제 값을 비교하고 싶다면, equals 를 사용해야합니다.</p>
 <h4 id="알쓸신잡-integer-caching">[알쓸신잡] Integer Caching</h4>
 <p>Integer는 Wrapper Type이지만, == 을 사용할 수 있는 범위가 존재합니다. <code>-128 ~ 127</code> 까지의 범위에서는 사용이 가능한데, 그 이유는 Integer 내부에서 IntegerCache 를 통해 일정 범위를 저장해두기 때문입니다.</p>
-<pre><code>	private static class IntegerCache {  
+<pre tabindex="0"><code>	private static class IntegerCache {  
 	 	//Integer을 까보시면 정의되어있습니다.
 	} 
 </code></pre><blockquote>

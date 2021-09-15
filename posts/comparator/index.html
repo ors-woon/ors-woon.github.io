@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.62.2" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>-able / -tor Interface&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.5feabbfa0c2473bc2b7916341f1e47cf5447d67069d2994723c5b83574d69129fbd136f8e59cbecfaf224e157ea5c613.css" integrity="sha384-X&#43;q7&#43;gwkc7wreRY0Hx5Hz1RH1nBp0plHI8W4NXTWkSn70Tb45Zy&#43;z68iThV&#43;pcYT"><body>
+<meta name="supported-color-schemes" content="light dark"><title>-able / -tor Interface&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.0c1ef03bca587fb8fb2c1073f3c6462e16d7ee1d0152e887ab07bda1c16f6a4214f31b0443773aaf34e5228c2ccc8c8c.css" integrity="sha384-DB7wO8pYf7j7LBBz88ZGLhbX7h0BUuiHqwe9ocFvakIU8xsEQ3c6rzTlIowszIyM"><body>
     <div class="base-body"><section id="header" class="site header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sketchbook</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a><a class="nav item" href="/">Sketchbook</a></nav></div></span></div><div class="site slogan"><span class="title">빈 스케치북에 뭐라도 적어놔야지</span></div></section><div id="content"><section class="article header">
@@ -19,12 +19,12 @@ Comparable을 구현하고 있는 List와 배열은 자동적으로 Collection.s
 자동적으로 정렬이 됩니다. 자세한 내용은 예제를 참고해주세요.</p>
 </blockquote>
 <p>Comparable은 compareTo라는 Method를 갖고있는데, 다음과 같습니다.</p>
-<pre><code>	int compareTo(T o) 
+<pre tabindex="0"><code>	int compareTo(T o) 
 </code></pre><p>해당 Method는 -1,0,1 의 값을 반환하는데, 반환값이 0이면 두 수가 같음을 의미하고 인자로 들어온 값이 더 크면 -1을 , 작으면 1을 반환합니다.</p>
 <p>다음은 comparable을 구현한 예제입니다.</p>
 <pre><code>```
 
-    public class Main {
+	public class Main {
         public static void main(String[] args){
             Student[] students = new Student[5];
 	
@@ -47,8 +47,8 @@ Comparable을 구현하고 있는 List와 배열은 자동적으로 Collection.s
 	
 	
         }
-    }
-    class Student implements Comparable{
+	}
+	class Student implements Comparable{
         private int score;
         private String name;
 	
@@ -69,7 +69,7 @@ Comparable을 구현하고 있는 List와 배열은 자동적으로 Collection.s
             // input_score - this.score 를 하면 내림차순으로 정렬할 수 있습니다.
             return this.score - input_score;
         }
-    }
+	}
 		
 
 ```   
@@ -122,12 +122,12 @@ Comparable을 구현하고 있는 List와 배열은 자동적으로 Collection.s
 Comparator 또한 다음과 같은 Method를 구현해야 합니다.<br>
 ( Comparable과 달리 인자를 2개 받는 Method 입니다. )</p>
 <pre><code>```
-    int compare(T o1, T o2)
+	int compare(T o1, T o2)
 ```
 </code></pre>
 <p>우선 Comparator 의 예제를 보여드리겠습니다.</p>
 <pre><code>```
-    public class Main {
+	public class Main {
         public static void main(String args[]){
             Student[] students = new Student[5];
             Student Jang = new Student(&quot;장철운&quot;,50);
@@ -148,15 +148,15 @@ Comparator 또한 다음과 같은 Method를 구현해야 합니다.<br>
             }
         }
 	
-    }
-    class StudentCompare implements Comparator&lt;Student&gt; {
+	}
+	class StudentCompare implements Comparator&lt;Student&gt; {
 	
         @Override
         public int compare(Student o1, Student o2) {
             return o1.getScore() - o2.getScore();
         }
-    }
-    class Student{
+	}
+	class Student{
         private int score;
         private String name;
 	
@@ -170,7 +170,7 @@ Comparator 또한 다음과 같은 Method를 구현해야 합니다.<br>
         public String getName(){
             return name;
         }
-    }
+	}
 
 ```
 </code></pre>
@@ -181,7 +181,7 @@ Comparator 또한 다음과 같은 Method를 구현해야 합니다.<br>
 sort(객체,comparator)을 사용하여 정렬이 가능합니다. <br>
 사용 예시는 다음과 같습니다.</p>
 <pre><code>```
-    public class Main {
+	public class Main {
         public static void main(String[] args){
             Student[] students = new Student[5];
 	
@@ -209,9 +209,9 @@ sort(객체,comparator)을 사용하여 정렬이 가능합니다. <br>
             }
 	        
         }
-    }
+	}
 	
-    class Student implements Comparable{
+	class Student implements Comparable{
         private int score;
         private String name;
 	
@@ -232,9 +232,9 @@ sort(객체,comparator)을 사용하여 정렬이 가능합니다. <br>
             // input_score - this.score 를 하면 내림차순으로 정렬할 수 있습니다.
             return this.score - input_score;
         }
-    }
+	}
 
-    class StudentCompare implements Comparator&lt;Student&gt; {
+	class StudentCompare implements Comparator&lt;Student&gt; {
 	
         @Override
         public int compare(Student o1, Student o2) {
@@ -242,7 +242,7 @@ sort(객체,comparator)을 사용하여 정렬이 가능합니다. <br>
             String name2 = o2.getName().toUpperCase();
             return name1.compareTo(name2);
         }
-    }
+	}
 ```
 </code></pre>
 <p>결과는 다음과 같습니다.</p>
@@ -267,7 +267,7 @@ comparator<br>
 <p>참고자료<br>
 <a href="https://docs.oracle.com/javase/8/docs/api/"target="_blank">Java doc</a><br>
 <a href="https://www.mkyong.com/java/java-object-sorting-example-comparable-and-comparator/"target="_blank">Java object sorting example </a></p>
-</article><section class="article labels"><a class="category" href=/categories/kotlin/>Kotlin</a><a class="tag" href=/tags/shortcodes/>shortcodes</a></section><section class="article navigation"><p><a class="link" href="/posts/ssh/"><span class="li">&rarr;</span>ssh 동작 방식</a class="link">
+</article><section class="article labels"><a class="category" href=/categories/kotlin/>Kotlin</a><a class="tag" href=/tags/shortcodes/>shortcodes</a></section><section class="article navigation"><p><a class="link" href="/posts/linux-command-tricks/"><span class="li">&larr;</span>Linux Command Tips And Tricks</a></p><p><a class="link" href="/posts/resttemplate-logging/"><span class="li">&rarr;</span>title</a class="link">
     </p></section></div><section id="footer" class="footer"><div class="footer-wrap">
     <p class="copyright">©2020 Notepadium.</p>
     <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
