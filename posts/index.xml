@@ -7,10 +7,19 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©2020 Notepadium.</copyright>
-    <lastBuildDate>Wed, 15 Sep 2021 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 25 Sep 2021 00:00:00 +0000</lastBuildDate>
     
         <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>스레드와 프로세스 정리</title>
+      <link>/posts/concurrent/process-thread/</link>
+      <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>/posts/concurrent/process-thread/</guid>
+      <description>자바 병렬 프로그래밍 책을 읽기 전, 간단하게 프로세스와 스레드에 대한 개념을 정리하고자합니다. 개인적으로 잊지 않기 위해 정리하는 것으로, 보다 정돈된 글은 프로</description>
+    </item>
     
     <item>
       <title>RestTemplate Request / Response Logging</title>
