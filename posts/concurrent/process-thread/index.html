@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.88.1" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.101.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>스레드와 프로세스 정리&nbsp;&ndash;&nbsp;Sketchbook</title><link rel="stylesheet" href="/css/core.min.0c1ef03bca587fb8fb2c1073f3c6462e16d7ee1d0152e887ab07bda1c16f6a4214f31b0443773aaf34e5228c2ccc8c8c.css" integrity="sha384-DB7wO8pYf7j7LBBz88ZGLhbX7h0BUuiHqwe9ocFvakIU8xsEQ3c6rzTlIowszIyM"><body>
-    <div class="base-body"><section id="header" class="site header">
-    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Sketchbook</span></a></span>
-        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about/">About</a><a class="nav item" href="/">Sketchbook</a></nav></div></span></div><div class="site slogan"><span class="title">빈 스케치북에 뭐라도 적어놔야지</span></div></section><div id="content"><section class="article header">
-    <h1 class="article title">스레드와 프로세스 정리</h1><p class="article date">Sep 25, 2021</p></section><article class="article markdown-body"><p><a href="http://www.yes24.com/Product/Goods/3015162"target="_blank">자바 병렬 프로그래밍</a> 책을 읽기 전, 간단하게 프로세스와 스레드에 대한 개념을 정리하고자합니다.
-개인적으로 잊지 않기 위해 정리하는 것으로, 보다 정돈된 글은 <a href="https://velog.io/@raejoonee/%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%99%80-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%B0%A8%EC%9D%B4"target="_blank">프로세스와 스레드의 차이</a>를 보셔도 좋을거 같습니다.</p>
+<meta name="supported-color-schemes" content="light dark"><title>스레드와 프로세스 정리&nbsp;&ndash;&nbsp;Ors</title><link rel="stylesheet" href="/css/core.min.9e958365cf0319ede466a402e1369f31dc1f205c868aa836fe25581725c829d3f3545d9f142cccafe35363950a63e2a6.css" integrity="sha384-npWDZc8DGe3kZqQC4TafMdwfIFyGiqg2/iVYFyXIKdPzVF2fFCzMr&#43;NTY5UKY&#43;Km"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="스레드와 프로세스 정리" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Ors</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a><a class="nav item" href="/about">About</a><a class="nav item" href="https://ors-woon%2egithub%2eio/"target="_blank" rel="noopener noreferrer">ors</a></nav></div></span></div><div class="site slogan"><span class="title">1년뒤 내가 봐도 이해할 수 있게</span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">스레드와 프로세스 정리</h1><p class="article date">Saturday, September 25, 2021</p></section><article class="article markdown-body"><p><a href="http://www.yes24.com/Product/Goods/3015162"target="_blank" rel="noopener noreferrer">자바 병렬 프로그래밍</a>
+ 책을 읽기 전, 간단하게 프로세스와 스레드에 대한 개념을 정리하고자합니다.
+개인적으로 잊지 않기 위해 정리하는 것으로, 보다 정돈된 글은 <a href="https://velog.io/@raejoonee/%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%99%80-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%B0%A8%EC%9D%B4"target="_blank" rel="noopener noreferrer">프로세스와 스레드의 차이</a>
+를 보셔도 좋을거 같습니다.</p>
 <h2 id="한줄-정리">한줄 정리</h2>
 <p><code>Process</code>란 운영 체제로 부터 자원을 할당받은 작업의 단위입니다.<br>
 <code>Thread</code>란 프로세스가 할당받은 자원을 이용하는 실행 흐름 단위입니다.</p>
@@ -39,13 +41,13 @@
 <p>즉, 현재 실행 중인 프로세스의 데이터는 레지스터에 올려두고, 이전에 실행한 프로세스의 데이터들은 메모리에 저장하게 됩니다. cpu는 이전에 실행한적있는 프로세스라면 메모리로부터 데이터를 레지스터에 적재시키는 작업을합니다.
 이 작업을 context switching 이라 말하며, 이때 cpu는 다른 작업을 처리하지못합니다. 때문에 보다 많은 Overhead 가 발생하게됩니다.</p>
 <p>위같은 이유로, 복수개의 Process 보단, 복수개의 Thread 로 프로그램을 운영합니다.</p>
-</article><section class="article labels"><a class="category" href=/categories/cs/>CS</a><a class="tag" href=/tags/o%C5%9B/>OŚ</a><a class="tag" href=/tags/cs/>CS</a><a class="tag" href=/tags/concurrent/>Concurrent</a></section><section class="article navigation"><p><a class="link" href="/posts/resttemplate-logging/"><span class="li">&rarr;</span>RestTemplate Request / Response Logging</a class="link">
-    </p></section></div><section id="footer" class="footer"><div class="footer-wrap">
-    <p class="copyright">©2020 Notepadium.</p>
-    <p class="powerby"><span>Powered by </span><a href="https://gohugo.io" 
-        target="_blank">Hugo</a><span> and the </span><a href="https://themes.gohugo.io/hugo-notepadium/" 
-        target="_blank">Notepadium</a></p>
-</div></section></div>
-</body>
+</article><section class="article labels"><a class="category" href=/categories/cs/>CS</a><a class="tag" href=/tags/o%C5%9B/>OŚ</a><a class="tag" href=/tags/cs/>CS</a><a class="tag" href=/tags/concurrent/>Concurrent</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/resttemplate-logging/"><span class="iconfont icon-article"></span>RestTemplate Request / Response Logging</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2019 Notepadium.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
 
 </html>

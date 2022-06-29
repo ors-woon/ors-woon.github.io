@@ -1,78 +1,261 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Sketchbook</title>
-    <link>/tags/</link>
-    <description>Recent content in Tags on Sketchbook</description>
+    <title>Tags on Ors</title>
+    <link>https://ors-woon.github.io/tags/</link>
+    <description>Recent content in Tags on Ors</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <copyright>©2020 Notepadium.</copyright>
+    <copyright>©2019 Notepadium.</copyright>
     <lastBuildDate>Sat, 25 Sep 2021 00:00:00 +0000</lastBuildDate>
     
-        <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+        <atom:link href="https://ors-woon.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>Concurrent</title>
-      <link>/tags/concurrent/</link>
+      <title>스레드와 프로세스 정리</title>
+      <link>https://ors-woon.github.io/posts/concurrent/process-thread/</link>
       <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/concurrent/</guid>
-      <description></description>
+      <guid>https://ors-woon.github.io/posts/concurrent/process-thread/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;http://www.yes24.com/Product/Goods/3015162&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;자바 병렬 프로그래밍&lt;/a&gt;
+ 책을 읽기 전, 간단하게 프로세스와 스레드에 대한 개념을 정리하고자합니다.
+개인적으로 잊지 않기 위해 정리하는 것으로, 보다 정돈된 글은 &lt;a href=&#34;https://velog.io/@raejoonee/%ED%94%84%EB%A1%9C%EC%84%B8%EC%8A%A4%EC%99%80-%EC%8A%A4%EB%A0%88%EB%93%9C%EC%9D%98-%EC%B0%A8%EC%9D%B4&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;프로세스와 스레드의 차이&lt;/a&gt;
+를 보셔도 좋을거 같습니다.&lt;/p&gt;
+&lt;h2 id=&#34;한줄-정리&#34;&gt;한줄 정리&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;Process&lt;/code&gt;란 운영 체제로 부터 자원을 할당받은 작업의 단위입니다.&lt;br&gt;
+&lt;code&gt;Thread&lt;/code&gt;란 프로세스가 할당받은 자원을 이용하는 실행 흐름 단위입니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;Process&lt;/code&gt;는 OS로 부터 메모리 자원을 할당받아 실행되며, 최소 1개의 main Thread를 갖게 됩니다.
+할당받은 자원은 다른 스레드에서 &lt;code&gt;직접 접근&lt;/code&gt;이 불가능하다는 특징을 갖고 있습니다.
+&lt;code&gt;Thread&lt;/code&gt;는 Process 내에서 실행되며, 일부 Process의 자원을 공유합니다.&lt;/p&gt;
+&lt;h2 id=&#34;process-메모리-자원&#34;&gt;Process 메모리 자원&lt;/h2&gt;
+&lt;p&gt;Process 가 OS 로 부터 할당받은 자원은 크게 4가지(&lt;code&gt;Heap&lt;/code&gt;, &lt;code&gt;Stack&lt;/code&gt;, &lt;code&gt;Code&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;) 로 나뉘어지며, 다른 프로세스에서 접근할 수 없습니다.&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&#34;https://ors-woon.github.io/images/process-area.png&#34;&gt;
+&lt;/center&gt;
+&lt;p&gt;위처럼 Process들은 독립된 자원을 이용하여 기능을 수행하게됩니다. 다만, 서로 독립된 자원이기에, OS 에서 Process 스케줄링 수행 시, OverHead 가 존재하게 됩니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;일반 사용자에겐 여러 프로세스가 동시에 실행되는것 처럼 보이나, 사실은 짧은 시간 동안 서로 cpu를 점유하여 기능을 수행하고 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이러한 Overhead (&lt;code&gt;Contetx Switching&lt;/code&gt;)를 줄이기 위해 Thread 를 사용하게되는데요.&lt;/p&gt;
+&lt;p&gt;Thread 는 앞서 말했듯, Process 의 자원(&lt;code&gt;Heap&lt;/code&gt;, &lt;code&gt;Data&lt;/code&gt;, &lt;code&gt;Code&lt;/code&gt;)을 공유합니다.&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&#34;https://ors-woon.github.io/images/thread.png&#34;&gt;
+&lt;/center&gt;
+&lt;p&gt;Process의 일부 자원을 공유하기에, Context Switching 시 보다 적은 OverHead를 갖지만 동기화 이슈가 발생할 수 있다는 단점이 있습니다.&lt;/p&gt;
+&lt;p&gt;또한 프로세스끼리는 서로 격리되기에 오류 발생 시, 다른 프로세스 영향을 줄 가능성이 낮지만, 스레드는 자원을 공유하기에, 오류 발생 시 다른 스레드에 영향을 줄 수 있습니다.&lt;/p&gt;
+&lt;h2 id=&#34;context-swtching&#34;&gt;Context Swtching&lt;/h2&gt;
+&lt;p&gt;여러 프로그램 실행 시, 사용자에게는 동시에 실행하는 것처럼 보이나, 실제로는 프로세스들이 순차적으로 cpu를 점유하면서 실행되고 있습니다.&lt;/p&gt;
+&lt;p&gt;때문에 OS서는 프로세스의 cpu 할당 순서 및 방법을 결정하여, 스케줄링하고 있는데요.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;장기, 중기, 단기 스케줄링이 있다 정도로만 기억하고 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;프로세스를 실행하면 cpu 레지스터에 관련 데이터를 올려두어 사용하며, 다른 프로세스 실행 시, 이전 데이터(&lt;code&gt;프로세스를 이어서 실행하기 위함&lt;/code&gt;)를 메모리에 저장하여 관리합니다.&lt;/p&gt;
+&lt;p&gt;즉, 현재 실행 중인 프로세스의 데이터는 레지스터에 올려두고, 이전에 실행한 프로세스의 데이터들은 메모리에 저장하게 됩니다. cpu는 이전에 실행한적있는 프로세스라면 메모리로부터 데이터를 레지스터에 적재시키는 작업을합니다.
+이 작업을 context switching 이라 말하며, 이때 cpu는 다른 작업을 처리하지못합니다. 때문에 보다 많은 Overhead 가 발생하게됩니다.&lt;/p&gt;
+&lt;p&gt;위같은 이유로, 복수개의 Process 보단, 복수개의 Thread 로 프로그램을 운영합니다.&lt;/p&gt;
+</description>
     </item>
     
     <item>
-      <title>CS</title>
-      <link>/tags/cs/</link>
-      <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/cs/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>OŚ</title>
-      <link>/tags/o%C5%9B/</link>
-      <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/o%C5%9B/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>RestTemplate</title>
-      <link>/tags/resttemplate/</link>
+      <title>RestTemplate Request / Response Logging</title>
+      <link>https://ors-woon.github.io/posts/resttemplate-logging/</link>
       <pubDate>Wed, 15 Sep 2021 00:00:00 +0000</pubDate>
       
-      <guid>/tags/resttemplate/</guid>
-      <description></description>
+      <guid>https://ors-woon.github.io/posts/resttemplate-logging/</guid>
+      <description>&lt;p&gt;QA 및 개발 환경에서 외부 API에 대한 요청/응답을 로깅해야하는 상황이 자주 발생합니다.
+이 글에선 RestTemplate 을 Logging 하기 위한 설정을 다룹니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;메모리를 사용하는 방식이기에, Log 크기에 따라 real 환경에선 사용을 피하는 편이 좋습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;설정-요약&#34;&gt;설정 요약&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;interceptor&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;HttpResponseLoggingInterceptor&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClientHttpRequestInterceptor&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;companion&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;object&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;val&lt;/span&gt; &lt;span class=&#34;py&#34;&gt;log&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;LoggerFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;getLogger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;this&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;::&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;class&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;java&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;override&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;fun&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;intercept&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;HttpRequest&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ByteArray&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;execution&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClientHttpRequestExecution&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClientHttpResponse&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;if&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;isNotEmpty&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;reqeustBody : &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;$body&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;val&lt;/span&gt; &lt;span class=&#34;py&#34;&gt;response&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;execution&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;execute&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;request&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;response Header : &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${response.headers}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;response body : &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${IOUtils.toString(response.body, UTF_8)}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;response&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;restConfig&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nd&#34;&gt;@Configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;open&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;GitBlogRestTemplateConfig&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nd&#34;&gt;@Bean&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;open&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;fun&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;gitBlogRestTemplate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;restTemplateBuilder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RestTemplateBuilder&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;RestTemplate&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;restTemplateBuilder&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;requestFactory&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;BufferingClientHttpRequestFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;SimpleClientHttpRequestFactory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;())&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;additionalInterceptors&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;listOf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;HttpResponseLoggingInterceptor&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;io-stream-&#34;&gt;IO Stream ??&lt;/h2&gt;
+&lt;p&gt;Stream이란 운영체제에 의해 생성되는 가상의 통로로, 프로그램과 I/O 사이의 중간 매개자 역할을 수행합니다. Stream 은 단방향으로만 통신이 가능하다는 특성을 갖고 있는데요. 때문에 Java 에서는 java.io package 안에 InputStream 과 OutputStream을 각각 제공하고 있습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;InputStrema 과 OutputStream 은 추상 클래스로, 일부 함수를 재정의해야합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;앞서 말했듯, Stream 은 가상의 통로로, 별다른 설정을 하지 않는다면 한번 소비된 byte를 다시 읽어 올 수 없습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mark / reset 등의 함수를 이용하여, 원하는 지점부터 다시 읽을 수 있으나, 추가 구현이 필요하며, 데이터를 memory에 저장하여 관리해야합니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;이러한 특성으로, RestTemplate 의 request / response 를 logging 하기위해선 &lt;code&gt;별도의 설정&lt;/code&gt; 이 필요합니다.&lt;/p&gt;
+&lt;h2 id=&#34;clienthttprequestfactory-&#34;&gt;ClientHttpRequestFactory ??&lt;/h2&gt;
+&lt;p&gt;ClientHttpRequestFactory는 Connect / Socket timeout 및 connectionPool 등의 설정을 지원하며, ClientHttpRequest를 생성하는 factory class 입니다.
+개인적으로 혼란스러웠던 부분은, &lt;code&gt;RequestFactory 가 Response Logging 에 무슨 영향이 있지?&lt;/code&gt; 인데, ClientHttpRequest가 execute 함수를 제공하며, response 를 리턴하기 때문에, 이를 생성하는 Factory 구현에 영향을 받습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;BufferingClientHttpRequestFactory 주석에도 이 내용이 적혀있는데요.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-java&#34; data-lang=&#34;java&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;public&lt;/span&gt; &lt;span class=&#34;kd&#34;&gt;class&lt;/span&gt; &lt;span class=&#34;nc&#34;&gt;BufferingClientHttpRequestFactory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kd&#34;&gt;extends&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;AbstractClientHttpRequestFactoryWrapper&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Wrapper&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;a&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;ClientHttpRequestFactory&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;that&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;buffers&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;all&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;outgoing&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;and&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;incoming&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;streams&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;memory&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;Using&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;this&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;wrapper&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;allows&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;multiple&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;reads&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;of&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;the&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;response&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;body&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;RestTemplate의 getBody함수는 InputStream 을 통해 결과를 읽어오는데, 앞서 말했듯 Stream 은 한번 소비되고 다시 읽을 수 없기때문에 interceptor를 이용해 body를 logging을 하게되면, 실제 response 를 가져올땐 body가 빈 상태로 서비스 코드에 전달됩니다.&lt;/p&gt;
+&lt;p&gt;이를 막기위해 &lt;code&gt;BufferingClientHttpRequestFactory&lt;/code&gt; 를 설정해줘야하며, QA / Local 환경에서만 설정하는걸 권장드립니다.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;주의&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;BufferingClientHttpRequestFactory를 타고 가다보면, Response 를 BufferingClientHttpResponseWrapper로 감쌓는걸 볼 수 있습니다.
+해당 클래스는 body 값을 property로 들고 있어, 응답이 클 경우 메모리 관리에 영향을 주게 되는데요.
+특별한 이유가 아니라면, real 상황에서는 사용을 자제해야합니다.&lt;/p&gt;
+</description>
     </item>
     
     <item>
-      <title>Linux</title>
-      <link>/tags/linux/</link>
+      <title>Linux Command Tips And Tricks</title>
+      <link>https://ors-woon.github.io/posts/linux-command-tricks/</link>
       <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/linux/</guid>
-      <description></description>
+      <guid>https://ors-woon.github.io/posts/linux-command-tricks/</guid>
+      <description>&lt;p&gt;본 포스트는 &lt;a href=&#34;https://itsfoss.com/linux-command-tricks/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;20 Linux Command Tips and Tricks That Will Save You A Lot of Time&lt;/a&gt;
+에 나오는 일부 팁들을 정리한 글입니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;자세한 내용은 위 포스트를 참고해주세요 (_ )&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h4 id=&#34;linux-tips-and-tricks&#34;&gt;Linux Tips and Tricks&lt;/h4&gt;
+&lt;p&gt;개인적으로, 새로운 IDE를 쓰거나, Tool 혹은 언어를 배울때면, 단축키나 Trick을 찾아 공부하고 있습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;어느정도 생산성을 올려줘서 찾는 것도 있지만, 사실 멋잇어보여서 ..&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;필요할때마다 찾아보고있는데, 한번 정리해두면 보기 편할거 같아, 글로 정리해봅니다 :)&lt;/p&gt;
+&lt;h4 id=&#34;running-multiple-commands-in-one-single-command&#34;&gt;Running multiple commands in one single command&lt;/h4&gt;
+&lt;p&gt;여러개의 명령어를 한줄로 치기위한 방법입니다.&lt;/p&gt;
+&lt;p&gt;예를들어, 여러 component를 command line 으로 빌드하려할떄, 아래처럼 명령어를 입력 할 수 있습니다.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;build a; build b; build c
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;다만 위 명령어는 앞의 명령어의 성공 여부와는 상관 없이 다음 명령어를 실행 시킵니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;만약 의존성을 갖는 component 의  build 라면 아래 처럼 AND 연산자를 사용해야합니다.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;build a &amp;amp;&amp;amp; build b &amp;amp;&amp;amp; build c
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;easily-search-and-use-the-commands-that-you-had-used-in-the-past&#34;&gt;Easily search and use the commands that you had used in the past&lt;/h4&gt;
+&lt;p&gt;(개인적으로 자주있는 상황인데..) grep / cut 을 이용해 검색을 한 후에, directory를 넘다드는 과정에서 이전에 친 명령어가 다시 필요한 적이 있습니다.&lt;/p&gt;
+&lt;p&gt;보통 history 명령어로 다시 찾곤하는데, 그럴 필요 없이 아래 tricks 로 쉽게 찾을 수 있습니다.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ctrl + r serach_term
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;reuse-the-last-item-from-the-previous-command-with-&#34;&gt;Reuse the last item from the previous command with !$&lt;/h4&gt;
+&lt;p&gt;이전 명령어에 대한 argument 를 사용하고 싶을떄는 아래처럼 !$ 을 쓸 수 있습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;당장 떠오르는 상황은 아래같은 상황이네요&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd SQLGateDriver_1.1.log
+cd: not a directory: SQLGateDriver_1.1.log
+vi !$
+vi SQLGateDriver_1.1.log
+&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;reuse-the-previous-command-in-present-command-with-&#34;&gt;Reuse the previous command in present command with !!&lt;/h4&gt;
+&lt;p&gt;이전 명령어를 !! 로 불러올 수 있습니다.&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vi kmplex-hugo-bloc
+vi /etc/hosts
+sudo !!
+&lt;/code&gt;&lt;/pre&gt;</description>
     </item>
     
     <item>
-      <title>Trick</title>
-      <link>/tags/trick/</link>
-      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>/tags/trick/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ssh</title>
-      <link>/tags/ssh/</link>
+      <title>ssh 동작 방식</title>
+      <link>https://ors-woon.github.io/posts/ssh/</link>
       <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
       
-      <guid>/tags/ssh/</guid>
-      <description></description>
+      <guid>https://ors-woon.github.io/posts/ssh/</guid>
+      <description>&lt;h1 id=&#34;ssh-protocol&#34;&gt;SSH Protocol&lt;/h1&gt;
+&lt;p&gt;ssh 이란  &lt;code&gt;Secure Shell Protocol&lt;/code&gt; 의 약자로,  FTP / Telnet 에 비해 &lt;strong&gt;보안&lt;/strong&gt;에 초점을 맞춘  protocol 입니다.&lt;/p&gt;
+&lt;h2 id=&#34;인증-방식&#34;&gt;인증 방식&lt;/h2&gt;
+&lt;p&gt;ssh 은 &lt;code&gt;비대칭키&lt;/code&gt; 방식을 이용하여 사용자 인증을 진행합니다.  client / server 간의 통신 시 보안을 위해 packet을 암호화하는데, 이때 암호화/복호화의 수단으로 key 를 이용합니다.&lt;/p&gt;
+&lt;p&gt;하나의 key로 암호화 / 복호화를 진행하는 방식을 &lt;code&gt;대칭키&lt;/code&gt;,  하나의 key로 암호화한 내용을, 다른 key로 복호화 할 수 있는 방식을 &lt;code&gt;비대칭키&lt;/code&gt;라 말합니다.&lt;/p&gt;
+&lt;p&gt;대칭키는 키 유출 시, client / server 간의 내용이 쉽게 노출될 수 있어 바로 사용되진 않으며,  비대칭키는 컴퓨터 자원을 많이 소모합니다. 때문에 ssh / https 는  비대칭키 / 대칭키를  모두 사용하는 방식을 이용합니다.&lt;/p&gt;
+&lt;h2 id=&#34;비대칭키&#34;&gt;비대칭키&lt;/h2&gt;
+&lt;p&gt;비대칭키란, public / private key 로 이루어진 인증방식입니다. private key 로 암호화한 내용을 public key로 복호화 할 수 있으며, 반대로 public key로 암호화한 내용을 private key로만 복호화가능한 방식을 의미합니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;한쪽의 key만 안다고해서 packet을 모두 복호화할 수 없습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;client 에서 private key를,  server 에서 public key를 저장하고 있는 상태에서 ssh 인증을 진행하게 됩니다.&lt;/p&gt;
+&lt;center&gt;
+    &lt;img src=&#34;https://ors-woon.github.io/images/ssh-key-auth-flow.png&#34;&gt;
+&lt;/center&gt;
+&lt;pre&gt;&lt;code&gt;1. client 는 server 에게 ssh connection 요청을 보냅니다.
+2. server 는 랜덤한 message 를 생성하여 저장합니다.
+그리고 이를 client에게 전송합니다.
+3. client 는 받은 message + 대칭키를 암호화(private key)하여
+server 에게 전송합니다.
+4. server 는 받은 packet을 복호화(public key)하여, 
+저장하고있던 값과 비교합니다. 값이 동일할 경우, 인증이 완료됩니다.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;위 인증이 완료된 경우,  비대칭 키를 이용해, 대칭키를 서로 교환하게 됩니다.  이후 통신되는 모든 데이터는 대칭키를 통해 암호화가 이루어집니다.&lt;/p&gt;
+&lt;h2 id=&#34;linux-에서-ssh-설정&#34;&gt;Linux 에서 ssh 설정&lt;/h2&gt;
+&lt;p&gt;첫 번째로, &lt;code&gt;ssh-keygen&lt;/code&gt; 명령어를 사용해, 공개키 / 비공개키를 생성합니다.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;현재 디렉터리에 id_rsa / id_rsa.pub 한쌍이 생성되며, &lt;code&gt;id_rsa&lt;/code&gt; 가 비공개 키 &lt;code&gt;id_rsa.pub&lt;/code&gt;  가 공개키로 id_rsa는 절대 유출되어서는 안됩니다.&lt;/p&gt;
+&lt;p&gt;그후  공개키를 원하는 서버 &lt;code&gt;$HOME/.ssh&lt;/code&gt; 경로에  &lt;code&gt;authorized_keys&lt;/code&gt; 이라는 이름으로 생성하고 알맞은 권한을 설정하면 ssh 접근이 가능합니다.&lt;/p&gt;
+&lt;h2 id=&#34;설정-요약&#34;&gt;설정 요약&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;1. client 에서   ssh-keygen -t rsa  를 입력한다.
+2. .ssh 경로에 생긴 id_rsa / id_rsa.pub 을 확인한다.
+3. id_rsa.pub 을 원하는 서버 $HOME/.ssh 에 authorized_keys 라는 이름으로 옮겨둔다.
+4. chmod 를 통해 알맞은 권한을 부여한다.
+5. client 에서 ssh 접속을 진행한다. (특정 계정으로 접근해야하는 경우, ssh user@host 로 접근한다.)
+
+끝  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;또한 Linux 뿐만 아니라, github 등 여러 서비스에서도 ssh을 이용하여 인증을 진행하고 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://ors-woon.github.io/about/</link>
+      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://ors-woon.github.io/about/</guid>
+      <description>&lt;p&gt;Written in Go, Hugo is an open source static site generator available under the &lt;a href=&#34;https://github.com/gohugoio/hugo/blob/master/LICENSE&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Apache Licence 2.0.&lt;/a&gt;
+ Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p&gt;
+&lt;p&gt;Hugo makes use of a variety of open source projects including:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/russross/blackfriday&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/russross/blackfriday&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/alecthomas/chroma&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/alecthomas/chroma&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/muesli/smartcrop&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/muesli/smartcrop&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/cobra&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/spf13/cobra&lt;/a&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/viper&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/spf13/viper&lt;/a&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.&lt;/p&gt;
+&lt;p&gt;Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.&lt;/p&gt;
+&lt;p&gt;Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.&lt;/p&gt;
+&lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;GitHub&lt;/a&gt;
+.&lt;/p&gt;
+</description>
     </item>
     
   </channel>
