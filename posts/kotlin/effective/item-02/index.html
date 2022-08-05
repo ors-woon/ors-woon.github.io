@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.101.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="supported-color-schemes" content="light dark"><title>item02 변수의 스코프를 최소화하라&nbsp;&ndash;&nbsp;Ors</title><link rel="stylesheet" href="/css/core.min.9e958365cf0319ede466a402e1369f31dc1f205c868aa836fe25581725c829d3f3545d9f142cccafe35363950a63e2a6.css" integrity="sha384-npWDZc8DGe3kZqQC4TafMdwfIFyGiqg2/iVYFyXIKdPzVF2fFCzMr&#43;NTY5UKY&#43;Km"><meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="item02 변수의 스코프를 최소화하라" /><body><section id="header">
+    <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Ors</span></a></span>
+        <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
+    <h1 class="article title">item02 변수의 스코프를 최소화하라</h1><p class="article date">Friday, August 5, 2022<span class="reading-time"> • 4 minutes to read</span></p></section><article class="article markdown-body"><p>상태를 정의할때 변수와 프로퍼티의 스코프를 최소화하는 것이 좋습니다.</p>
+<ul>
+<li>property 보단 지역 변수를 사용하는 것이 좋습니다.</li>
+<li>최대한 좁은 스코프를 갖게 변수를 사용합니다.</li>
+</ul>
+<p>scope 라는 것은 요소를 볼 수 있는 컴퓨터 프로그램 영역입니다.
+kotlin은 block scope 로, 내부 scope 에서 외부 scope에 있는 요소에만 접근할 수 있습니다.</p>
+<blockquote>
+<p>반대로 외부에서 내부 scope 로는 접근 할 수 없습니다.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">a</span> <span class="p">=</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">fizz</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="py">b</span> <span class="p">=</span> <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="n">print</span><span class="p">(</span><span class="n">a</span> <span class="p">+</span> <span class="n">b</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">buzz</span> <span class="p">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="py">c</span> <span class="p">=</span> <span class="m">3</span>
+</span></span><span class="line"><span class="cl">  <span class="n">print</span><span class="p">(</span><span class="n">a</span> <span class="p">+</span> <span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// 여기서 a 를 사용할 수 있으나, b/c 는 사용하지 못함
+</span></span></span></code></pre></div><p>최대한 변수는 scope를 좁게 설정하는것이 좋습니다.
+가장 큰 이유는 추척 / 관리하기 쉬워지기 때문이며, immutable 을 선호하는 이유와 비슷합니다.</p>
+<p>scope 범위가 넓을 경우, 변수가 잘못 사용될 여지가 있으며 코드가 길어질 수 록 이해하기가 어려워집니다.</p>
+<blockquote>
+<p>변수는 정의할때 초기화 되는 것이 가장 좋습니다.</p>
+</blockquote>
+<p><code>if, when, try-catch, Elvis</code> 표현식등을 사용하면 최대한 변수를 정의할때 초기화 할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// worst
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">val</span> <span class="py">user</span><span class="p">:</span> <span class="n">User</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="p">(</span><span class="n">hasValue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">user</span> <span class="p">=</span> <span class="n">getValue</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">user</span> <span class="p">=</span> <span class="n">User</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// best
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">val</span> <span class="py">user</span><span class="p">:</span> <span class="n">User</span> <span class="p">=</span> <span class="k">if</span> <span class="p">(</span><span class="n">hasValue</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">getValue</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">User</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>여러 property 를 한꺼번에 설정해야하는 경우, destructuring declaration 을 활용하는 것이 좋습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="c1">// worst
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fun</span> <span class="nf">updateWeather</span><span class="p">(</span><span class="n">degrees</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="py">description</span><span class="p">:</span> <span class="n">String</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="py">color</span><span class="p">:</span> <span class="n">Int</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="p">(</span><span class="n">degrees</span> <span class="p">&lt;</span> <span class="m">5</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;color&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">BLUE</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="n">degrees</span> <span class="p">&lt;</span> <span class="m">23</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;mild&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">YELLOW</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">description</span> <span class="p">=</span> <span class="s2">&#34;hot&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">color</span> <span class="p">=</span> <span class="n">Color</span><span class="p">.</span><span class="n">RED</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// best ?
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="k">fun</span> <span class="nf">updateWeather</span><span class="p">(</span><span class="n">degrees</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="err">(</span><span class="py">description</span><span class="p">,</span> <span class="n">color</span><span class="p">)</span> <span class="p">=</span> <span class="k">when</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">degrees</span> <span class="p">&lt;</span> <span class="m">5</span> <span class="o">-&gt;</span> <span class="s2">&#34;cold&#34;</span> <span class="n">to</span> <span class="n">Color</span><span class="p">.</span><span class="n">BLUE</span>
+</span></span><span class="line"><span class="cl">    <span class="n">degrees</span> <span class="p">&lt;</span> <span class="m">23</span> <span class="o">-&gt;</span> <span class="s2">&#34;mild&#34;</span> <span class="n">to</span> <span class="n">Color</span><span class="p">.</span><span class="n">YELLOW</span>
+</span></span><span class="line"><span class="cl">    <span class="k">else</span> <span class="o">-&gt;</span> <span class="s2">&#34;hot&#34;</span> <span class="n">to</span> <span class="n">Color</span><span class="p">.</span><span class="n">RED</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>결론적으로 변수의 스코프가 넓으면 굉장히 위험합니다.</p>
+<h2 id="캡처링">캡처링</h2>
+<p>예시로 나오는 알고리즘은 에라토스테네스의 체 (소수를 구하는 알고리즘) 입니다.</p>
+<ul>
+<li>2부터 시작하는 숫자 리스트를 만든다.</li>
+<li>첫번째 요소를 선택하고, 이는 소수이다.</li>
+<li>남아있는 숫자 중, 2번에서 선택한 소수로 나눌 수 있는 모든 숫자를 제거합니다.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">var</span> <span class="py">numbers</span> <span class="p">=</span> <span class="p">(</span><span class="m">2.</span><span class="p">.</span><span class="m">100</span><span class="p">).</span><span class="n">toList</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">primes</span> <span class="p">=</span> <span class="n">mutableListOf</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">isNotEmpty</span><span class="p">())</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">val</span> <span class="py">prime</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">first</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="n">primes</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">prime</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">number</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">filter</span> <span class="p">{</span> <span class="k">it</span> <span class="p">%</span> <span class="n">prime</span> <span class="o">!=</span> <span class="m">0</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">primes</span><span class="p">)</span>
+</span></span></code></pre></div><p>이를 시퀀스로 확장하면, 아래처럼 구현할 수 있습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">primes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">sequence</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">var</span> <span class="py">numbers</span> <span class="p">=</span> <span class="n">generateSequence</span><span class="p">(</span><span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="k">it</span> <span class="p">+</span> <span class="m">1</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">prime</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">first</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">yield</span><span class="p">(</span><span class="n">prime</span><span class="p">)</span> <span class="c1">// 다음 호출시 까지 stop (lazy evaluation)
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">numbers</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="n">filter</span> <span class="p">{</span> <span class="k">it</span> <span class="p">%</span> <span class="n">prime</span> <span class="o">!=</span> <span class="m">0</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">primes</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="m">10</span><span class="p">).</span><span class="n">toList</span><span class="p">())</span> <span class="c1">// [2,3,5,7,11,13,17,19,23,29]
+</span></span></span></code></pre></div><p>위 코드에서 prime 의 scope 를 한 단계 올리면, 이상한 결과가 나오게 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">primes</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">sequence</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">var</span> <span class="py">numbers</span> <span class="p">=</span> <span class="n">generateSequence</span><span class="p">(</span><span class="m">2</span><span class="p">)</span> <span class="p">{</span> <span class="k">it</span> <span class="p">+</span> <span class="m">1</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">var</span> <span class="py">prime</span><span class="p">:</span> <span class="n">Int</span>
+</span></span><span class="line"><span class="cl">  <span class="k">while</span> <span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">prime</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">first</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">yield</span><span class="p">(</span><span class="n">prime</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">numbers</span> <span class="p">=</span> <span class="n">numbers</span><span class="p">.</span><span class="n">drop</span><span class="p">(</span><span class="m">1</span><span class="p">).</span><span class="n">filter</span> <span class="p">{</span> <span class="k">it</span> <span class="p">%</span> <span class="n">prime</span> <span class="o">!=</span> <span class="m">0</span> <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">print</span><span class="p">(</span><span class="n">primes</span><span class="p">.</span><span class="n">take</span><span class="p">(</span><span class="m">10</span><span class="p">).</span><span class="n">toList</span><span class="p">())</span> <span class="c1">// [2,3,5,6,7,8,9,10,11,12]
+</span></span></span></code></pre></div><p>위처럼 이상한 결과가 나온 이유는 capturing 때문입니다. 반복문 내부에서 prime 으로 숫자를 필터링하는데, 지연 연산으로 filter 가 지연됩니다.</p>
+<p>따라서 최종적인 prime 값으로만 filtering 이 진행되고, 2로 설정되어있을때의 4 값만 제외된 결과가 나옵니다.</p>
+<p>이러한 예상하지 못한 결과가 나올 수 있으므로, 항상 잠재적인 capture 문제를 주의해야합니다.</p>
+<h4 id="해설">해설</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">start: 2
+</span></span><span class="line"><span class="cl">prime : 2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">return: 2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">numbers = numbers.drop(1)
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0 }
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">prime = 3 =&gt; first()   // 종단 연산  drop - 2, first - 3
+</span></span><span class="line"><span class="cl">return = 3
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">numbers = numbers.drop(1) drop 2
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0 } return 4/ 5 (3 % 4 / 3 % 5)
+</span></span><span class="line"><span class="cl">.drop(1) -&gt; drop 4
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0} -&gt; 3 % 5
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">prime = 5 =&gt; first()
+</span></span><span class="line"><span class="cl">return = 5
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">numbers = numbers.drop(1) drop 2
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0 } return 3/ 4 / 5 (3 % 5, 4 % 5, 6 % 5)
+</span></span><span class="line"><span class="cl">.drop(1) -&gt; drop 3
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0} -&gt; return 4/ 6 (4 % 5, 6 % 5)
+</span></span><span class="line"><span class="cl">.drop(1) -&gt; drop 4
+</span></span><span class="line"><span class="cl">.filter { it % prime != 0} -&gt; 6
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">prime = 6 =&gt; first()
+</span></span><span class="line"><span class="cl">... (중략)
+</span></span></code></pre></div><p>위처럼 캡처링이 사용 될 경우, 예상하지 못한 값이 반환 됩니다.</p>
+<h2 id="결론">결론</h2>
+<p>여러 가지 이유로 변수의 scope 는 좁게 만들어서 활용하는 것이 좋습니다.</p>
+<blockquote>
+<p>또한 var 보단 val 을 사용하는게 좋습니다. + 변수는 선언과 동시에 초기화되는 것이 좋습니다.</p>
+</blockquote>
+<p>람다에서 변수를 캡처한다는 것을 꼭 기억해야합니다.</p>
+</article><section class="article labels"><a class="category" href=/categories/kotlin/>kotlin</a><a class="tag" href=/tags/kotlin/>kotlin</a><a class="tag" href=/tags/effective/>effective</a></section>
+</div>
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/kotlin/effective/item-01/"><span class="iconfont icon-article"></span>item01 가변성을 제한하라</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+    <p class="copyright">©2019 Notepadium.</p>
+    <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
+        target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
+        target="_blank" rel="noopener noreferrer">Notepadium</a></p></div>
+</section></body>
+
+</html>
