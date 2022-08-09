@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.68.3" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="en"><meta charset="utf-8"><meta name="generator" content="Hugo 0.101.0" /><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="supported-color-schemes" content="light dark"><title>item01 가변성을 제한하라&nbsp;&ndash;&nbsp;Ors</title><link rel="stylesheet" href="/css/core.min.3a64599c5309a0ef6a6aae6160ff2ef0a2761b8c9c77bb08a8e42acdcccf3467d4053b40d3c0c740bd546b0dd168be48.css" integrity="sha384-OmRZnFMJoO9qaq5hYP8u8KJ2G4ycd7sIqOQqzczPNGfUBTtA08DHQL1Uaw3RaL5I"><meta name="twitter:card" content="summary" />
+<meta name="supported-color-schemes" content="light dark"><title>item01 가변성을 제한하라&nbsp;&ndash;&nbsp;Ors</title><link rel="stylesheet" href="/css/core.min.9e958365cf0319ede466a402e1369f31dc1f205c868aa836fe25581725c829d3f3545d9f142cccafe35363950a63e2a6.css" integrity="sha384-npWDZc8DGe3kZqQC4TafMdwfIFyGiqg2/iVYFyXIKdPzVF2fFCzMr&#43;NTY5UKY&#43;Km"><meta name="twitter:card" content="summary" />
 <meta name="twitter:title" content="item01 가변성을 제한하라" /><body><section id="header">
     <div class="header wrap"><span class="header left-side"><a class="site home" href="/"><span class="site name">Ors</span></a></span>
         <span class="header right-side"><div class="nav wrap"><nav class="nav"><a class="nav item" href="/categories/">Categories</a><a class="nav item" href="/tags/">Tags</a></nav></div></span></div></section><section id="content"><div class="article-container"><section class="article header">
     <h1 class="article title">item01 가변성을 제한하라</h1><p class="article date">Tuesday, August 2, 2022<span class="reading-time"> • 5 minutes to read</span></p></section><article class="article markdown-body"><p>kotlin property 중 일부는 상태(state)를 가질 수 있습니다. 
 대표적으로 <code>var</code> 을 사용하거나, <code>mutable</code> 객체를 사용하면 상태를 갖을 수 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">var</span> <span class="py">a</span> <span class="p">=</span> <span class="m">0</span>
-<span class="k">var</span> <span class="py">list</span> <span class="p">:</span> <span class="n">MutableList</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">mutableListOf</span><span class="p">()</span>
-</code></pre></div><p>이처럼 property 가 상태를 갖는 경우, 해당 요소의 동작은 사용 방법 뿐아니라, history 에도 의존하게 됩니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">
-<span class="k">var</span> <span class="py">property</span> <span class="p">=</span> <span class="m">0</span>
-
-<span class="k">fun</span> <span class="nf">add</span><span class="p">(</span><span class="n">count</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">property</span> <span class="p">+=</span> <span class="n">count</span>
-<span class="p">}</span>
-</code></pre></div><p>이처럼 상태를 갖게 하는 것은 양날의검입니다. 시간의 변화에 따라 요소를 표현할 수 있다는 것은 유용하나, 이를 적절히 관리하는 것은 생각보다 꽤 어렵습니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">var</span> <span class="py">a</span> <span class="p">=</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">list</span> <span class="p">:</span> <span class="n">MutableList</span><span class="p">&lt;</span><span class="n">Int</span><span class="p">&gt;</span> <span class="p">=</span> <span class="n">mutableListOf</span><span class="p">()</span>
+</span></span></code></pre></div><p>이처럼 property 가 상태를 갖는 경우, 해당 요소의 동작은 사용 방법 뿐아니라, history 에도 의존하게 됩니다.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">property</span> <span class="p">=</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">add</span><span class="p">(</span><span class="n">count</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">property</span> <span class="o">+=</span> <span class="n">count</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>이처럼 상태를 갖게 하는 것은 양날의검입니다. 시간의 변화에 따라 요소를 표현할 수 있다는 것은 유용하나, 이를 적절히 관리하는 것은 생각보다 꽤 어렵습니다.</p>
 <ul>
 <li>
 <ol>
@@ -70,62 +70,62 @@
 </blockquote>
 <p>객체 내부 값은 바뀔 수 있습니다.</p>
 <p>또한 읽기 전용 프로퍼티는 다른 프로퍼티를 활용하는 사용자 정의 게터로도 사용할 수 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">
-<span class="k">var</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="s">&#34;Marcin
-</span><span class="s"></span><span class="k">var</span> <span class="py">surname</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="s">&#34;Moskala&#34;</span>
-
-<span class="k">val</span> <span class="py">fullName</span> 
-    <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="s">&#34;$name $surname&#34;</span>
-
-<span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">fullName</span><span class="p">)</span> <span class="c1">// Marcin Moskala
-</span><span class="c1"></span>    <span class="n">name</span> <span class="p">=</span> <span class="s">&#34;Maja&#34;</span>
-    <span class="n">println</span><span class="p">(</span><span class="n">fullName</span><span class="p">)</span> <span class="c1">// Maja Moskala
-</span><span class="c1"></span><span class="p">}</span>
-</code></pre></div><p>값을 호출할때마다, 사용자 정의 게터가 호출되므로, 위처럼 함수를 작성할 수 있습니다.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">name</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="s2">&#34;Marcin</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">surname</span><span class="p">:</span> <span class="n">String</span> <span class="p">=</span> <span class="s2">&#34;Moskala&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">val</span> <span class="py">fullName</span> 
+</span></span><span class="line"><span class="cl">    <span class="k">get</span><span class="p">()</span> <span class="p">=</span> <span class="s2">&#34;</span><span class="si">$name</span><span class="s2"> </span><span class="si">$surname</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">fun</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">println</span><span class="p">(</span><span class="n">fullName</span><span class="p">)</span> <span class="c1">// Marcin Moskala
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="n">name</span> <span class="p">=</span> <span class="s2">&#34;Maja&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">println</span><span class="p">(</span><span class="n">fullName</span><span class="p">)</span> <span class="c1">// Maja Moskala
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
+</span></span></code></pre></div><p>값을 호출할때마다, 사용자 정의 게터가 호출되므로, 위처럼 함수를 작성할 수 있습니다.
 코틀린의 프로퍼티는 기본적으로 캡슐화되어 있고, 추가적으로 사용자 정의 접근자를 가질 수 있습니다. 이러한 특성으로 API 를 변경하거나, 정의할때 굉장히 유연합니다.</p>
 <blockquote>
 <p>관련 내용은 Item16 에서 다릅니다.</p>
 </blockquote>
 <p>추가적으로 var 은 게터와 세터 모두를 제공하지만, val 은 게터만 재공합니다.
 그래서 val 을 var 로 override 할 수 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin">
-<span class="k">interface</span> <span class="nc">Element</span> <span class="p">{</span>
-    <span class="k">val</span> <span class="py">active</span><span class="p">:</span> <span class="n">Boolean</span>
-<span class="p">}</span>
-
-<span class="k">class</span> <span class="nc">ActualElemnet</span> <span class="p">:</span> <span class="n">Element</span> <span class="p">{</span>
-    <span class="k">override</span> <span class="k">var</span> <span class="py">active</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">=</span> <span class="k">false</span>
-<span class="p">}</span>
-</code></pre></div><blockquote>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">interface</span> <span class="nc">Element</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">val</span> <span class="py">active</span><span class="p">:</span> <span class="n">Boolean</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">class</span> <span class="nc">ActualElemnet</span> <span class="p">:</span> <span class="n">Element</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">override</span> <span class="k">var</span> <span class="py">active</span><span class="p">:</span> <span class="n">Boolean</span> <span class="p">=</span> <span class="k">false</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><blockquote>
 <p>java</p>
 </blockquote>
-<div class="highlight"><pre class="chroma"><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ActualElemnet</span> <span class="kd">implements</span> <span class="n">Element</span> <span class="o">{</span>
-   <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">active</span><span class="o">;</span>
-
-   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">getActive</span><span class="o">()</span> <span class="o">{</span>
-      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">active</span><span class="o">;</span>
-   <span class="o">}</span>
-
-   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setActive</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">var1</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">this</span><span class="o">.</span><span class="na">active</span> <span class="o">=</span> <span class="n">var1</span><span class="o">;</span>
-   <span class="o">}</span>
-<span class="o">}</span>
-<span class="c1">// Element.java
-</span><span class="c1"></span><span class="kn">package</span> <span class="nn">test</span><span class="o">;</span>
-
-<span class="kn">import</span> <span class="nn">kotlin.Metadata</span><span class="o">;</span>
-
-<span class="nd">@Metadata</span><span class="o">(</span>
-   <span class="n">mv</span> <span class="o">=</span> <span class="o">{</span><span class="n">1</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">0</span><span class="o">},</span>
-   <span class="n">k</span> <span class="o">=</span> <span class="n">1</span><span class="o">,</span>
-   <span class="n">d1</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;\u0000\u0012\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u000b\n\u0002\b\u0003\bf\u0018\u00002\u00020\u0001R\u0012\u0010\u0002\u001a\u00020\u0003X¦\u0004¢\u0006\u0006\u001a\u0004\b\u0004\u0010\u0005¨\u0006\u0006&#34;</span><span class="o">},</span>
-   <span class="n">d2</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Ltest/Element;&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">,</span> <span class="s">&#34;active&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">,</span> <span class="s">&#34;getActive&#34;</span><span class="o">,</span> <span class="s">&#34;()Z&#34;</span><span class="o">,</span> <span class="s">&#34;dashBoard&#34;</span><span class="o">}</span>
-<span class="o">)</span>
-<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Element</span> <span class="o">{</span>
-   <span class="kt">boolean</span> <span class="nf">getActive</span><span class="o">();</span>
-<span class="o">}</span>
-</code></pre></div><p>읽기 전용 프로퍼티 val 의 값은 변경될 수 있지만, reference 자체를 변경할 수는 없으므로 동기화 문제등을 줄일 수 있습니다.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-java" data-lang="java"><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">final</span> <span class="kd">class</span> <span class="nc">ActualElemnet</span> <span class="kd">implements</span> <span class="n">Element</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">   <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">active</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">getActive</span><span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">active</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setActive</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">var1</span><span class="o">)</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">      <span class="k">this</span><span class="o">.</span><span class="na">active</span> <span class="o">=</span> <span class="n">var1</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">   <span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="c1">// Element.java
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kn">package</span> <span class="nn">test</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">kotlin.Metadata</span><span class="o">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nd">@Metadata</span><span class="o">(</span>
+</span></span><span class="line"><span class="cl">   <span class="n">mv</span> <span class="o">=</span> <span class="o">{</span><span class="n">1</span><span class="o">,</span> <span class="n">6</span><span class="o">,</span> <span class="n">0</span><span class="o">},</span>
+</span></span><span class="line"><span class="cl">   <span class="n">k</span> <span class="o">=</span> <span class="n">1</span><span class="o">,</span>
+</span></span><span class="line"><span class="cl">   <span class="n">d1</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;\u0000\u0012\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0000\n\u0002\u0010\u000b\n\u0002\b\u0003\bf\u0018\u00002\u00020\u0001R\u0012\u0010\u0002\u001a\u00020\u0003X¦\u0004¢\u0006\u0006\u001a\u0004\b\u0004\u0010\u0005¨\u0006\u0006&#34;</span><span class="o">},</span>
+</span></span><span class="line"><span class="cl">   <span class="n">d2</span> <span class="o">=</span> <span class="o">{</span><span class="s">&#34;Ltest/Element;&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">,</span> <span class="s">&#34;active&#34;</span><span class="o">,</span> <span class="s">&#34;&#34;</span><span class="o">,</span> <span class="s">&#34;getActive&#34;</span><span class="o">,</span> <span class="s">&#34;()Z&#34;</span><span class="o">,</span> <span class="s">&#34;dashBoard&#34;</span><span class="o">}</span>
+</span></span><span class="line"><span class="cl"><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Element</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">   <span class="kt">boolean</span> <span class="nf">getActive</span><span class="o">();</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><p>읽기 전용 프로퍼티 val 의 값은 변경될 수 있지만, reference 자체를 변경할 수는 없으므로 동기화 문제등을 줄일 수 있습니다.
 그래서 일반적으로 var 보단 val 을 더 많이 사용합니다.</p>
 <blockquote>
 <p>val 을 사용할 경우, 값이 바뀌지 않으므로 smartCast 를 사용할 수 있습니다.</p>
@@ -139,10 +139,10 @@ list 에는 add 등의 함수가 없으며, mutableList 에만 add 등의 상태
 </blockquote>
 <p>다만, 읽기 전용 컬렉션이 내부의 값을 변경할 수 없다는 의미는 아닙니다.
 대부분의 경우는 변경할 수 있으나, Interface 가 이를 지원하지 않는다는 의미로 많은 util 함수에서 up casting 으로 이를 구현하고 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">public</span> <span class="k">inline</span> <span class="k">fun</span> &lt;T, R&gt; <span class="nf">Iterable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">map</span><span class="p">(</span><span class="n">transform</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="p">-&gt;</span> <span class="n">R</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;</span> <span class="p">{</span>
-    <span class="k">return</span> <span class="n">mapTo</span><span class="p">(</span><span class="n">ArrayList</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;(</span><span class="n">collectionSizeOrDefault</span><span class="p">(</span><span class="m">10</span><span class="p">)),</span> <span class="n">transform</span><span class="p">)</span>
-<span class="p">}</span>
-</code></pre></div><p>내부로직에선 ArrayList (mutable)을 사용하고 있으나, return 시에는 List(immutable)로 반환하고 있습니다.<br>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">public</span> <span class="k">inline</span> <span class="k">fun</span> <span class="p">&lt;</span><span class="nc">T</span><span class="p">,</span> <span class="nc">R</span><span class="p">&gt;</span> <span class="nf">Iterable</span><span class="p">&lt;</span><span class="n">T</span><span class="p">&gt;.</span><span class="n">map</span><span class="p">(</span><span class="n">transform</span><span class="p">:</span> <span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">R</span><span class="p">):</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">mapTo</span><span class="p">(</span><span class="n">ArrayList</span><span class="p">&lt;</span><span class="n">R</span><span class="p">&gt;(</span><span class="n">collectionSizeOrDefault</span><span class="p">(</span><span class="m">10</span><span class="p">)),</span> <span class="n">transform</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>내부로직에선 ArrayList (mutable)을 사용하고 있으나, return 시에는 List(immutable)로 반환하고 있습니다.<br>
 이러한 컬렉션을 진짜로 immutable 하게 만들지 않고, 읽기 전용으로 설계한 것은 굉장히 중요한 부분입니다. <br>
 이로 인해, 더 많은 자유를 얻을 수 있으며 안정성 또한 보장됩니다.</p>
 <blockquote>
@@ -160,10 +160,10 @@ copy 사용 시, deep copy는 지원히지 않습니다.</p>
 </blockquote>
 <h4 id="다른-종류의-변경-가능-지점">다른 종류의 변경 가능 지점</h4>
 <p>변경 할 수 있는 리스트를 만들어야한다고 했을때, 다음과 같은 두가지 선택지가 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">val</span> <span class="py">list1</span><span class="p">:</span> <span class="n">MutableList</span>
-<span class="k">var</span> <span class="py">list2</span><span class="p">:</span> <span class="n">ImmutableList</span> 
-</code></pre></div><p>두가지 모두 변경할 수 있으나, 방법이 다릅니다.</p>
-<pre><code>list1 += 1 // list1.plusAssign(1) 로 변경됩니다. (add)
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">val</span> <span class="py">list1</span><span class="p">:</span> <span class="n">MutableList</span>
+</span></span><span class="line"><span class="cl"><span class="k">var</span> <span class="py">list2</span><span class="p">:</span> <span class="n">ImmutableList</span> 
+</span></span></code></pre></div><p>두가지 모두 변경할 수 있으나, 방법이 다릅니다.</p>
+<pre tabindex="0"><code>list1 += 1 // list1.plusAssign(1) 로 변경됩니다. (add)
 list2 += 2 // list2 = list2.plus(2) 로 변경됩니다.
 </code></pre><p>두 방법 모두 변경 가능 지점이 있으나, 그 위치가 다릅니다.
 첫번째 코드는 구현 내부에 변경 가능 지점이 존재하며, 두번째 코드는 프로퍼티 자체가 변경 가능 지점입니다.</p>
@@ -172,9 +172,9 @@ list2 += 2 // list2 = list2.plus(2) 로 변경됩니다.
 </blockquote>
 <p><em>주의</em> var 과 Mutable 을 함께 사용하지 마세요.</p>
 <p>또한 2번 방식을 사용 할 경우, set 을 막으면 내부에서만 값을 바꿀 수 있습니다.</p>
-<div class="highlight"><pre class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="k">var</span> <span class="py">announcements</span> <span class="p">=</span> <span class="n">listOf</span><span class="p">&lt;</span><span class="n">AnnounceMent</span><span class="p">&gt;()</span>
-    <span class="k">private</span> <span class="k">set</span>
-</code></pre></div><h4 id="변경-가능-지점-노출하지-말기">변경 가능 지점 노출하지 말기</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-kotlin" data-lang="kotlin"><span class="line"><span class="cl"><span class="k">var</span> <span class="py">announcements</span> <span class="p">=</span> <span class="n">listOf</span><span class="p">&lt;</span><span class="n">AnnounceMent</span><span class="p">&gt;()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">private</span> <span class="k">set</span>
+</span></span></code></pre></div><h4 id="변경-가능-지점-노출하지-말기">변경 가능 지점 노출하지 말기</h4>
 <p>상태를 가지는 mutable 객체를 외부에 노출하는 것은 굉장히 위험합니다.</p>
 <blockquote>
 <p>캡슐화를 어기는 행위로, 내부 구현에 어떤 영향이 갈지 추측하기 어렵습니다.</p>
@@ -185,7 +185,7 @@ list2 += 2 // list2 = list2.plus(2) 로 변경됩니다.
 이러한 최적화 코드는 코등에서 성능이 중요한 부분에서만 사용되어야하며, immutable 객체를 사용할때는 언제나 멀티스레드 때에 더 많은 주의를 기율여야합니다.</p>
 </article><section class="article labels"><a class="category" href=/categories/kotlin/>kotlin</a><a class="tag" href=/tags/kotlin/>kotlin</a><a class="tag" href=/tags/effective/>effective</a></section>
 </div>
-<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/kotlin/effective/item-03/"><span class="iconfont icon-article"></span>item03 최대한 플랫폼 타입을 사용하지 말라</a></p><p><a class="link" href="/posts/concurrent/process-thread/"><span class="iconfont icon-article"></span>스레드와 프로세스 정리</a></p></section></div></section><section id="footer"><div class="footer-wrap">
+<div class="article bottom"><section class="article navigation"><p><a class="link" href="/posts/kotlin/effective/item-02/"><span class="iconfont icon-article"></span>item02 변수의 스코프를 최소화하라</a></p><p><a class="link" href="/posts/concurrent/process-thread/"><span class="iconfont icon-article"></span>스레드와 프로세스 정리</a></p></section></div></section><section id="footer"><div class="footer-wrap">
     <p class="copyright">©2019 Notepadium.</p>
     <p class="powerby"><span>Powered&nbsp;by&nbsp;</span><a href="https://gohugo.io" 
         target="_blank" rel="noopener noreferrer">Hugo</a><span>&nbsp;&amp;&nbsp;</span><a href="https://themes.gohugo.io/hugo-notepadium/" 
