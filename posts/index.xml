@@ -6,10 +6,73 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
     <copyright>©2019 Notepadium.</copyright>
-    <lastBuildDate>Tue, 09 Aug 2022 10:29:50 +0900</lastBuildDate>
+    <lastBuildDate>Tue, 16 Aug 2022 23:48:02 +0900</lastBuildDate>
     
         <atom:link href="https://ors-woon.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>item08 적절하게 null을 처리하라</title>
+      <link>https://ors-woon.github.io/posts/kotlin/effective/item-08/</link>
+      <pubDate>Tue, 16 Aug 2022 23:48:02 +0900</pubDate>
+      
+      <guid>https://ors-woon.github.io/posts/kotlin/effective/item-08/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>item07 결과 부족이 발생할 경우 null과 Failure를 사용하라</title>
+      <link>https://ors-woon.github.io/posts/kotlin/effective/item-07/</link>
+      <pubDate>Fri, 12 Aug 2022 16:21:51 +0900</pubDate>
+      
+      <guid>https://ors-woon.github.io/posts/kotlin/effective/item-07/</guid>
+      <description>&lt;p&gt;함수가 원하는 결과를 만들어 낼 수 없을때, 2가지 방법을 사용 할 수 있습니다.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;null 또는 실패를 나타내는 sealed class 를 리턴한다.&lt;/li&gt;
+&lt;li&gt;예외를 throw 한다.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;2번째 방법인 예외는 정보를 전달하는 방법으로 사용해서는 안되며, 잘못된 특별한 상황을 나타내도록 처리해야합니다.&lt;/p&gt;
+&lt;p&gt;예외는 많은 개발자가 예외 전파되는 과정을 제대로 추적하기 어렵습니다. 또한 kotlin 의 모든 예외는 unchecked 이므로, 사용자가 예외를 처리하지 않을 수 있습니다.
+마지막으로 try-catch 블록 내부에 코드를 배치하면, 컴파일러가 할 수 있는 최적화가 제한됩니다.&lt;/p&gt;
+&lt;p&gt;반면, null 과 sealed class (Failure)는 예상되는 오류를 표현할때 굉장히 좋습니다.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;method 를 사용하는 사람에, 실패 상황을 명시적으로 표현할 수 있습니다.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;따라서 충분히 예측할 수 있는 범위의 오류는 Null 과 Failure 를 사용하고, 예측하기 어려운 상황에 대해서는 throw 를 처리하는 것이 좋습니다.&lt;/p&gt;
+&lt;p&gt;추가적인 정보를 전달해야 할 경우 Failure 를 사용하며 그렇지 않으면 null 을 사용하는 것이 일반적입니다.&lt;/p&gt;
+&lt;p&gt;만약 null 을 사용한다고하면, getOrNull 과 같은 무엇이 리턴되는지 예측할 수 있게 하는 것이 좋습니다.&lt;/p&gt;
+&lt;h4 id=&#34;추가적으로-&#34;&gt;추가적으로 ..&lt;/h4&gt;
+&lt;p&gt;Kotlin 은 Result 라는 class 를 제공하는데, 결과를 캡슐화하여, 다른 곳에서 처리할 수 있도록하는 class 입니다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-kotlin&#34; data-lang=&#34;kotlin&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;fun&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;getApi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;():&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;String&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;try&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;catch&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;e&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;Exception&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;Result&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;failure&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;Exception&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;text&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;))&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// method 호출부에서 exception 처리가 가능
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;val&lt;/span&gt; &lt;span class=&#34;py&#34;&gt;response&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;getApi&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;().&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;getOrElse&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;default&amp;#34;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Result 를 사용 시, 비즈니스 로직과 관련된 예외 처리를 infra 가 아닌 service layer 에서 (쉽게) 진행 할 수 있습니다.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>item06 사용자 정의 오류보다는 표준 오류를 사용하라.</title>
+      <link>https://ors-woon.github.io/posts/kotlin/effective/item-06/</link>
+      <pubDate>Fri, 12 Aug 2022 16:18:13 +0900</pubDate>
+      
+      <guid>https://ors-woon.github.io/posts/kotlin/effective/item-06/</guid>
+      <description>&lt;p&gt;가능하다면 직접 오류를 정의하는 것 보다는 최대한 표준 라이브러리의 오류를 사용하는 것이 좋습니다.
+많은 개발자가 표준 라이브러리의 오류를 알고 있으므로, 이를 재사용하는것이 좋습니다.&lt;/p&gt;
+&lt;p&gt;다른 사람들이 API를 더 쉽게 배우고 이해할 수 있으므로, 표준 라이브러리의 오류를 사용하세요.&lt;/p&gt;
+&lt;p&gt;일반적으로 사용되는 예외는 아래와 같습니다.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-text&#34; data-lang=&#34;text&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- IllegalArgumentException, IllegalStateException
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- IndexOutOfBoundsException
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- ConcurrentModificationException
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- UnsupportedOperationException
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- NoSuchElementException
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>item05 예외를 활용해 코드에 제한을 걸어라</title>
@@ -756,133 +819,6 @@ list2 += 2 // list2 = list2.plus(2) 로 변경됩니다.
 &lt;p&gt;BufferingClientHttpRequestFactory를 타고 가다보면, Response 를 BufferingClientHttpResponseWrapper로 감쌓는걸 볼 수 있습니다.
 해당 클래스는 body 값을 property로 들고 있어, 응답이 클 경우 메모리 관리에 영향을 주게 되는데요.
 특별한 이유가 아니라면, real 상황에서는 사용을 자제해야합니다.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Linux Command Tips And Tricks</title>
-      <link>https://ors-woon.github.io/posts/linux-command-tricks/</link>
-      <pubDate>Sun, 14 Jun 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://ors-woon.github.io/posts/linux-command-tricks/</guid>
-      <description>&lt;p&gt;본 포스트는 &lt;a href=&#34;https://itsfoss.com/linux-command-tricks/&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;20 Linux Command Tips and Tricks That Will Save You A Lot of Time&lt;/a&gt;
-에 나오는 일부 팁들을 정리한 글입니다.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;자세한 내용은 위 포스트를 참고해주세요 (_ )&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h4 id=&#34;linux-tips-and-tricks&#34;&gt;Linux Tips and Tricks&lt;/h4&gt;
-&lt;p&gt;개인적으로, 새로운 IDE를 쓰거나, Tool 혹은 언어를 배울때면, 단축키나 Trick을 찾아 공부하고 있습니다.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;어느정도 생산성을 올려줘서 찾는 것도 있지만, 사실 멋잇어보여서 ..&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;필요할때마다 찾아보고있는데, 한번 정리해두면 보기 편할거 같아, 글로 정리해봅니다 :)&lt;/p&gt;
-&lt;h4 id=&#34;running-multiple-commands-in-one-single-command&#34;&gt;Running multiple commands in one single command&lt;/h4&gt;
-&lt;p&gt;여러개의 명령어를 한줄로 치기위한 방법입니다.&lt;/p&gt;
-&lt;p&gt;예를들어, 여러 component를 command line 으로 빌드하려할떄, 아래처럼 명령어를 입력 할 수 있습니다.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;build a; build b; build c
-&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
-&lt;p&gt;다만 위 명령어는 앞의 명령어의 성공 여부와는 상관 없이 다음 명령어를 실행 시킵니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;만약 의존성을 갖는 component 의  build 라면 아래 처럼 AND 연산자를 사용해야합니다.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;build a &amp;amp;&amp;amp; build b &amp;amp;&amp;amp; build c
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;easily-search-and-use-the-commands-that-you-had-used-in-the-past&#34;&gt;Easily search and use the commands that you had used in the past&lt;/h4&gt;
-&lt;p&gt;(개인적으로 자주있는 상황인데..) grep / cut 을 이용해 검색을 한 후에, directory를 넘다드는 과정에서 이전에 친 명령어가 다시 필요한 적이 있습니다.&lt;/p&gt;
-&lt;p&gt;보통 history 명령어로 다시 찾곤하는데, 그럴 필요 없이 아래 tricks 로 쉽게 찾을 수 있습니다.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;ctrl + r serach_term
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;reuse-the-last-item-from-the-previous-command-with-&#34;&gt;Reuse the last item from the previous command with !$&lt;/h4&gt;
-&lt;p&gt;이전 명령어에 대한 argument 를 사용하고 싶을떄는 아래처럼 !$ 을 쓸 수 있습니다.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;당장 떠오르는 상황은 아래같은 상황이네요&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;cd SQLGateDriver_1.1.log
-cd: not a directory: SQLGateDriver_1.1.log
-vi !$
-vi SQLGateDriver_1.1.log
-&lt;/code&gt;&lt;/pre&gt;&lt;h4 id=&#34;reuse-the-previous-command-in-present-command-with-&#34;&gt;Reuse the previous command in present command with !!&lt;/h4&gt;
-&lt;p&gt;이전 명령어를 !! 로 불러올 수 있습니다.&lt;/p&gt;
-&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;vi kmplex-hugo-bloc
-vi /etc/hosts
-sudo !!
-&lt;/code&gt;&lt;/pre&gt;</description>
-    </item>
-    
-    <item>
-      <title>ssh 동작 방식</title>
-      <link>https://ors-woon.github.io/posts/ssh/</link>
-      <pubDate>Sat, 14 Mar 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://ors-woon.github.io/posts/ssh/</guid>
-      <description>&lt;h1 id=&#34;ssh-protocol&#34;&gt;SSH Protocol&lt;/h1&gt;
-&lt;p&gt;ssh 이란  &lt;code&gt;Secure Shell Protocol&lt;/code&gt; 의 약자로,  FTP / Telnet 에 비해 &lt;strong&gt;보안&lt;/strong&gt;에 초점을 맞춘  protocol 입니다.&lt;/p&gt;
-&lt;h2 id=&#34;인증-방식&#34;&gt;인증 방식&lt;/h2&gt;
-&lt;p&gt;ssh 은 &lt;code&gt;비대칭키&lt;/code&gt; 방식을 이용하여 사용자 인증을 진행합니다.  client / server 간의 통신 시 보안을 위해 packet을 암호화하는데, 이때 암호화/복호화의 수단으로 key 를 이용합니다.&lt;/p&gt;
-&lt;p&gt;하나의 key로 암호화 / 복호화를 진행하는 방식을 &lt;code&gt;대칭키&lt;/code&gt;,  하나의 key로 암호화한 내용을, 다른 key로 복호화 할 수 있는 방식을 &lt;code&gt;비대칭키&lt;/code&gt;라 말합니다.&lt;/p&gt;
-&lt;p&gt;대칭키는 키 유출 시, client / server 간의 내용이 쉽게 노출될 수 있어 바로 사용되진 않으며,  비대칭키는 컴퓨터 자원을 많이 소모합니다. 때문에 ssh / https 는  비대칭키 / 대칭키를  모두 사용하는 방식을 이용합니다.&lt;/p&gt;
-&lt;h2 id=&#34;비대칭키&#34;&gt;비대칭키&lt;/h2&gt;
-&lt;p&gt;비대칭키란, public / private key 로 이루어진 인증방식입니다. private key 로 암호화한 내용을 public key로 복호화 할 수 있으며, 반대로 public key로 암호화한 내용을 private key로만 복호화가능한 방식을 의미합니다.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;한쪽의 key만 안다고해서 packet을 모두 복호화할 수 없습니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;client 에서 private key를,  server 에서 public key를 저장하고 있는 상태에서 ssh 인증을 진행하게 됩니다.&lt;/p&gt;
-&lt;center&gt;
-    &lt;img src=&#34;https://ors-woon.github.io/images/ssh-key-auth-flow.png&#34;&gt;
-&lt;/center&gt;
-&lt;pre&gt;&lt;code&gt;1. client 는 server 에게 ssh connection 요청을 보냅니다.
-2. server 는 랜덤한 message 를 생성하여 저장합니다.
-그리고 이를 client에게 전송합니다.
-3. client 는 받은 message + 대칭키를 암호화(private key)하여
-server 에게 전송합니다.
-4. server 는 받은 packet을 복호화(public key)하여, 
-저장하고있던 값과 비교합니다. 값이 동일할 경우, 인증이 완료됩니다.
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;위 인증이 완료된 경우,  비대칭 키를 이용해, 대칭키를 서로 교환하게 됩니다.  이후 통신되는 모든 데이터는 대칭키를 통해 암호화가 이루어집니다.&lt;/p&gt;
-&lt;h2 id=&#34;linux-에서-ssh-설정&#34;&gt;Linux 에서 ssh 설정&lt;/h2&gt;
-&lt;p&gt;첫 번째로, &lt;code&gt;ssh-keygen&lt;/code&gt; 명령어를 사용해, 공개키 / 비공개키를 생성합니다.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;ssh-keygen -t rsa 
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;현재 디렉터리에 id_rsa / id_rsa.pub 한쌍이 생성되며, &lt;code&gt;id_rsa&lt;/code&gt; 가 비공개 키 &lt;code&gt;id_rsa.pub&lt;/code&gt;  가 공개키로 id_rsa는 절대 유출되어서는 안됩니다.&lt;/p&gt;
-&lt;p&gt;그후  공개키를 원하는 서버 &lt;code&gt;$HOME/.ssh&lt;/code&gt; 경로에  &lt;code&gt;authorized_keys&lt;/code&gt; 이라는 이름으로 생성하고 알맞은 권한을 설정하면 ssh 접근이 가능합니다.&lt;/p&gt;
-&lt;h2 id=&#34;설정-요약&#34;&gt;설정 요약&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;1. client 에서   ssh-keygen -t rsa  를 입력한다.
-2. .ssh 경로에 생긴 id_rsa / id_rsa.pub 을 확인한다.
-3. id_rsa.pub 을 원하는 서버 $HOME/.ssh 에 authorized_keys 라는 이름으로 옮겨둔다.
-4. chmod 를 통해 알맞은 권한을 부여한다.
-5. client 에서 ssh 접속을 진행한다. (특정 계정으로 접근해야하는 경우, ssh user@host 로 접근한다.)
-
-끝  
-&lt;/code&gt;&lt;/pre&gt;
-&lt;blockquote&gt;
-&lt;p&gt;또한 Linux 뿐만 아니라, github 등 여러 서비스에서도 ssh을 이용하여 인증을 진행하고 있습니다.&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://ors-woon.github.io/about/</link>
-      <pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate>
-      
-      <guid>https://ors-woon.github.io/about/</guid>
-      <description>&lt;p&gt;Written in Go, Hugo is an open source static site generator available under the &lt;a href=&#34;https://github.com/gohugoio/hugo/blob/master/LICENSE&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;Apache Licence 2.0.&lt;/a&gt;
- Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p&gt;
-&lt;p&gt;Hugo makes use of a variety of open source projects including:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/russross/blackfriday&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/russross/blackfriday&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/alecthomas/chroma&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/alecthomas/chroma&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/muesli/smartcrop&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/muesli/smartcrop&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/cobra&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/spf13/cobra&lt;/a&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&#34;https://github.com/spf13/viper&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;https://github.com/spf13/viper&lt;/a&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.&lt;/p&gt;
-&lt;p&gt;Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.&lt;/p&gt;
-&lt;p&gt;Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.&lt;/p&gt;
-&lt;p&gt;Learn more and contribute on &lt;a href=&#34;https://github.com/gohugoio&#34;target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;GitHub&lt;/a&gt;
-.&lt;/p&gt;
 </description>
     </item>
     
