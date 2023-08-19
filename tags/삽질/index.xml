@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>linux on Ors</title>
-    <link>https://ors-woon.github.io/tags/linux/</link>
-    <description>Recent content in linux on Ors</description>
+    <title>삽질 on Ors</title>
+    <link>https://ors-woon.github.io/tags/%EC%82%BD%EC%A7%88/</link>
+    <description>Recent content in 삽질 on Ors</description>
     <image>
       <title>Ors</title>
       <url>https://ors-woon.github.io/%3Clink%20or%20path%20of%20image%20for%20opengraph,%20twitter-cards%3E</url>
@@ -11,7 +11,7 @@
     </image>
     <generator>Hugo -- gohugo.io</generator>
     <language>en</language>
-    <lastBuildDate>Sat, 12 Aug 2023 00:00:00 +0900</lastBuildDate><atom:link href="https://ors-woon.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 12 Aug 2023 00:00:00 +0900</lastBuildDate><atom:link href="https://ors-woon.github.io/tags/%EC%82%BD%EC%A7%88/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Linux locale 삽질</title>
       <link>https://ors-woon.github.io/categories/hello/</link>
